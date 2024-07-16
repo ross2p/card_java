@@ -37,9 +37,21 @@ public interface UserMapper {
     }
 
     default Role getDefaultRole() {
-        return new Role(2, "ADMIN");
+        return new Role(2, "User");
     }
 
+
+    UserResponse toDto(User user);
+
+    @Mapping(source = "roleId", target = "role.id")
+    User toEntity(AdminCreationUpdateRequest adminCreationUpdateRequest);
+
+    @Mapping(source = "role.id", target = "roleId")
+    AdminCreationUpdateRequest toDto1(User user);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "roleId", target = "role.id")
+    User partialUpdate(AdminCreationUpdateRequest adminCreationUpdateRequest, @MappingTarget User user);
 
     @AfterMapping
     default void setDefaultValues(AdminCreationUpdateRequest dto, @MappingTarget User entity) {
@@ -47,5 +59,4 @@ public interface UserMapper {
     }
 
 
-    UserResponse toDto(User user);
 }

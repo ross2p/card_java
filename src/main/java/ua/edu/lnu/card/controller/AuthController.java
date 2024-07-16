@@ -37,7 +37,13 @@ public class AuthController {
     @PostMapping("/register/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> registerByAdmin(@RequestBody AdminCreationUpdateRequest userCreationRequest, UriComponentsBuilder ucb) {
-        return registerByUser(userCreationRequest, ucb);
+        UserResponse userResponse = userService.create(userCreationRequest);
+
+        URI location = ucb
+                .path("/api/users/{userId}")
+                .buildAndExpand(userResponse.id())
+                .toUri();
+        return ResponseEntity.created(location).body(userResponse);
     }
     @PostMapping("/register")
     public ResponseEntity<?> registerByUser(@RequestBody UserCreationUpdateRequest userCreationRequest, UriComponentsBuilder ucb) {

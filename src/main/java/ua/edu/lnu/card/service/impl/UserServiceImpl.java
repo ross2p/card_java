@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ua.edu.lnu.card.dto.user.AdminCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.entity.User;
@@ -52,6 +53,19 @@ public UserResponse create(UserCreationUpdateRequest userDto) {
 
     return userMapper.toDto(user);
 }
+
+    public UserResponse create(AdminCreationUpdateRequest userDto) {
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new AlreadyExistsException("User with email address '%s' already exists.".formatted(userDto.getEmail()));
+        }
+        User user = userMapper.toEntity(userDto);
+
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        user = userRepository.save(user);
+
+        return userMapper.toDto(user);
+    }
     @Override
     public UserResponse update(Long id, UserCreationUpdateRequest userCreationUpdateRequest) {
         User user = getUserById(id);
