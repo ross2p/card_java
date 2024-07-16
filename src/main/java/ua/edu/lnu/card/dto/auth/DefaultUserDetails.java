@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.entity;
+package ua.edu.lnu.card.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

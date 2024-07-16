@@ -2,6 +2,7 @@ package ua.edu.lnu.card.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.auth.JwtAuthenticationResponse;
-import ua.edu.lnu.card.dto.auth.LoginRequest;
+import ua.edu.lnu.card.dto.auth.LoginAuthentication;
+import ua.edu.lnu.card.dto.user.AdminCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
-import ua.edu.lnu.card.entity.DefaultUserDetails;
 import ua.edu.lnu.card.service.UserService;
 import ua.edu.lnu.card.utils.JwtUtils;
 
@@ -24,7 +26,7 @@ import java.net.URI;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
@@ -32,21 +34,24 @@ public class AuthController {
 
     private final UserService userService;
 
+    @PostMapping("/register/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> registerByAdmin(@RequestBody AdminCreationUpdateRequest userCreationRequest, UriComponentsBuilder ucb) {
+        return registerByUser(userCreationRequest, ucb);
+    }
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserCreationUpdateRequest userDto, UriComponentsBuilder ucb) {
-        UserResponse createdUser = userService.create(userDto);
+    public ResponseEntity<?> registerByUser(@RequestBody UserCreationUpdateRequest userCreationRequest, UriComponentsBuilder ucb) {
+        UserResponse userResponse = userService.create(userCreationRequest);
 
         URI location = ucb
-                .path("/api/v1/users/{userId}")
-                .buildAndExpand(createdUser.id())
+                .path("/api/users/{userId}")
+                .buildAndExpand(userResponse.id())
                 .toUri();
-
-        return ResponseEntity.created(location).body(createdUser);
-
+        return ResponseEntity.created(location).body(userResponse);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponse> login( @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody LoginAuthentication loginRequest) {
         Objects.requireNonNull(loginRequest, "Request user must not be null");
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password());

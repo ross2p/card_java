@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
 //    }
 @Override
 public UserResponse create(UserCreationUpdateRequest userDto) {
-    if (userRepository.existsByEmail(userDto.email())) {
-        throw new AlreadyExistsException("User with email address '%s' already exists.".formatted(userDto.email()));
+    if (userRepository.existsByEmail(userDto.getEmail())) {
+        throw new AlreadyExistsException("User with email address '%s' already exists.".formatted(userDto.getEmail()));
     }
     User user = userMapper.toEntity(userDto);
 

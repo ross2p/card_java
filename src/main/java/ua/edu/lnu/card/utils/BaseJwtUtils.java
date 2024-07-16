@@ -11,10 +11,10 @@ import java.util.Date;
 @Slf4j
 @Component
 public class BaseJwtUtils implements JwtUtils {
-    @Value("${todolist.jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${todolist.jwt.lifetime}")
+    @Value("${jwt.lifetime}")
     private Duration lifetime;
 
     @Override
@@ -24,7 +24,7 @@ public class BaseJwtUtils implements JwtUtils {
 
         return Jwts.builder()
                 .setSubject(username)
-                .setIssuer("todolist")
+                .setIssuer("card")
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS512, secret)
