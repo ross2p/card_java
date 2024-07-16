@@ -7,6 +7,7 @@ import ua.edu.lnu.card.dto.user.UserResponse;
 public interface UserService {
     UserResponse getById(Long userId);
 
+
     UserResponse create(UserCreationUpdateRequest userCreationRequest);
 
     UserResponse create(AdminCreationUpdateRequest userCreationRequest);

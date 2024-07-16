@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ua.edu.lnu.card.config.AuthComponent;
 import ua.edu.lnu.card.dto.user.AdminCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthComponent authComponent;
+
 
     private User getUserById(Long id) {
         return userRepository.findById(id)
@@ -45,13 +48,15 @@ public class UserServiceImpl implements UserService {
             throw new AlreadyExistsException("User with email address '%s' already exists.".formatted(userDto.getEmail()));
         }
         User user = userMapper.toEntity(userDto);
+
         user.setRole(roleRepository.getOne(userDto.getRoleId()));
-        System.out.println("User before: " + user);
+        user.setCreatedAt(Instant.now());
+        user.setUpdatedOn(Instant.now());
+        user.setUpdatedBy(authComponent.getUserName());
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user = userRepository.save(user);
-        System.out.println("User after: " + user);
 
         return userMapper.toDto(user);
     }
@@ -59,15 +64,18 @@ public class UserServiceImpl implements UserService {
     public UserResponse update(Long id, UserCreationUpdateRequest userCreationUpdateRequest) {
         User user = getUserById(id);
         User updatedUser = userMapper.partialUpdate(userCreationUpdateRequest, user);
+
         updatedUser.setUpdatedOn(Instant.now());
-        updatedUser.setUpdatedBy(user.getEmail());
+        updatedUser.setUpdatedBy(authComponent.getUserName());
+
         updatedUser = userRepository.save(updatedUser);
+
         return userMapper.toDto(updatedUser);
     }
 
     @Override
     public void delete(Long id) {
         User user = getUserById(id);
-        userRepository.delete(user);
+        userRepository.delete(user);        //todo: add column status (blocked, deleted, active)
     }
 }

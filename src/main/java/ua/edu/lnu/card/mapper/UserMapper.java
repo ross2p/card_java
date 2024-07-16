@@ -23,12 +23,4 @@ public interface UserMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User partialUpdate(UserCreationUpdateRequest userCreationUpdateRequest, @MappingTarget User user);
 
-    @AfterMapping
-    default void setDefaultValues(AdminCreationUpdateRequest dto, @MappingTarget User entity) {
-        if (entity.getCreatedAt() == null) {
-            entity.setCreatedAt(Instant.now());
-        }
-        entity.setUpdatedBy(dto.getEmail());
-        entity.setUpdatedOn(Instant.now());
-    }
 }
