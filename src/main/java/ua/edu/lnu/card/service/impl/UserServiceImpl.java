@@ -10,6 +10,7 @@ import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.entity.User;
 import ua.edu.lnu.card.exception.AlreadyExistsException;
 import ua.edu.lnu.card.mapper.UserMapper;
+import ua.edu.lnu.card.repository.RoleRepository;
 import ua.edu.lnu.card.repository.UserRepository;
 import ua.edu.lnu.card.service.UserService;
 
@@ -20,6 +21,7 @@ import java.time.Instant;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     private User getUserById(Long id) {
@@ -32,37 +34,24 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDto(user);
     }
 
-//    @Override
-//    public UserResponse create(UserCreationUpdateRequest userCreationRequest) {
-//        User user = userMapper.toEntity(userCreationRequest);
-//        user.setCreatedAt(Instant.now());
-//        user.setUpdatedBy(user.getEmail());
-//        user = userRepository.save(user);
-//        return userMapper.toDto(user);
-//    }
-@Override
-public UserResponse create(UserCreationUpdateRequest userDto) {
-    if (userRepository.existsByEmail(userDto.getEmail())) {
-        throw new AlreadyExistsException("User with email address '%s' already exists.".formatted(userDto.getEmail()));
+    @Override
+    public UserResponse create(UserCreationUpdateRequest userDto) {
+        return create(userMapper.toAdminDto(userDto, 1L));
     }
-    User user = userMapper.toEntity(userDto);
 
-    String encodedPassword = passwordEncoder.encode(user.getPassword());
-    user.setPassword(encodedPassword);
-    user = userRepository.save(user);
-
-    return userMapper.toDto(user);
-}
-
+    @Override
     public UserResponse create(AdminCreationUpdateRequest userDto) {
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new AlreadyExistsException("User with email address '%s' already exists.".formatted(userDto.getEmail()));
         }
         User user = userMapper.toEntity(userDto);
+        user.setRole(roleRepository.getOne(userDto.getRoleId()));
+        System.out.println("User before: " + user);
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user = userRepository.save(user);
+        System.out.println("User after: " + user);
 
         return userMapper.toDto(user);
     }

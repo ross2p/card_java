@@ -1,8 +1,6 @@
 package ua.edu.lnu.card.dto.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,10 +8,7 @@ import java.time.LocalDate;
 /**
  * DTO for {@link ua.edu.lnu.card.entity.User}
  */
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Value
 public class UserCreationUpdateRequest implements Serializable {
     Long id;
     String firstName;

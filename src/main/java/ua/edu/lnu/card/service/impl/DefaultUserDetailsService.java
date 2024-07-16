@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
-import ua.edu.lnu.card.entity.DefaultAuthority;
+import ua.edu.lnu.card.dto.auth.DefaultAuthority;
 import ua.edu.lnu.card.entity.User;
 import ua.edu.lnu.card.repository.UserRepository;
 

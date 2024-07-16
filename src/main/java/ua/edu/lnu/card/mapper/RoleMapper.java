@@ -12,4 +12,5 @@ public interface RoleMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Role partialUpdate(RoleDto roleDto, @MappingTarget Role role);
+
 }

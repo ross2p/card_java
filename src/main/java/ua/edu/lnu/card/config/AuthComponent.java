@@ -20,4 +20,8 @@ public class AuthComponent {
     private DefaultUserDetails getUserDetails() {
         return (DefaultUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+    private String getUserName() {
+        DefaultUserDetails userDetails = getUserDetails();
+        return userDetails.getUsername();
+    }
 }

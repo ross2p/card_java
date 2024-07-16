@@ -3,6 +3,7 @@ package ua.edu.lnu.card.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "users")
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +42,10 @@ public class User {
 
     @Column(name = "updated_on")
     private Instant updatedOn;
-    @ManyToOne(fetch = FetchType.EAGER)
+
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
 }
