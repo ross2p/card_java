@@ -2,6 +2,8 @@ package ua.edu.lnu.card.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.config.AuthComponent;
@@ -77,5 +79,10 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         User user = getUserById(id);
         userRepository.delete(user);        //todo: add column status (blocked, deleted, active)
+    }
+
+    @Override
+    public Page<UserResponse> getUsersPage(PageRequest pageRequest) {
+        return userRepository.findAll(pageRequest).map(userMapper::toDto);
     }
 }

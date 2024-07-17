@@ -4,10 +4,9 @@ import org.mapstruct.*;
 import ua.edu.lnu.card.dto.user.AdminCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
-import ua.edu.lnu.card.entity.Role;
 import ua.edu.lnu.card.entity.User;
 
-import java.time.Instant;
+
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
@@ -22,5 +21,6 @@ public interface UserMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User partialUpdate(UserCreationUpdateRequest userCreationUpdateRequest, @MappingTarget User user);
+
 
 }
