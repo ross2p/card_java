@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,5 +36,8 @@ public class Deck {
 
     @Column(name = "updated_by", length = 100)
     private String updatedBy;
+
+    @OneToMany(mappedBy = "deck")
+    private Set<Collaborator> collaborators = new LinkedHashSet<>();
 
 }

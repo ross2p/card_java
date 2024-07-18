@@ -7,13 +7,11 @@ import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.entity.User;
 
 
-
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
 
 
     UserResponse toDto(User user);
-
 
     AdminCreationUpdateRequest toAdminDto(UserCreationUpdateRequest userCreationUpdateRequest, Long roleId);
 
@@ -23,4 +21,8 @@ public interface UserMapper {
     User partialUpdate(UserCreationUpdateRequest userCreationUpdateRequest, @MappingTarget User user);
 
 
+    User toEntity(UserResponse userResponse);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    User partialUpdate(UserResponse userResponse, @MappingTarget User user);
 }

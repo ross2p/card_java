@@ -5,6 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
 
+import java.util.List;
+
 public interface DeckService {
     boolean isOwner(Long todoId, Long id);
 
@@ -16,5 +18,5 @@ public interface DeckService {
 
     Page<DeckResponse> getPublicDecksByUserId(Long userId, PageRequest of);
 
-    DeckResponse create(Long userId, DeckCreationUpdateRequest deckResponse);
+    DeckResponse create(Long userId, DeckCreationUpdateRequest deckResponse, String byUser);
 }
