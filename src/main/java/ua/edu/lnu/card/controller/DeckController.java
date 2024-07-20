@@ -9,10 +9,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.config.AuthComponent;
+import ua.edu.lnu.card.dto.collaborator.CollaboratorCreationUpdateRequest;
+import ua.edu.lnu.card.dto.deck.CollaboratorResponse;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
 import ua.edu.lnu.card.service.DeckService;
 
+import java.util.Set;
 
 
 @RestController
@@ -23,7 +26,7 @@ public class DeckController {
     private final AuthComponent authComponent;
 
     @GetMapping("/decks")
-    public ResponseEntity<Page<DeckResponse>> getDecks(@RequestParam(value = "offset", required = false) Integer offset,
+    public ResponseEntity<Page<DeckResponse>> getPublicDecks(@RequestParam(value = "offset", required = false) Integer offset,
                                                        @RequestParam(value = "pageSize", required = false) Integer pageSize,
                                                        @RequestParam(value = "sortBy", required = false) String sortBy) {
 
@@ -46,14 +49,20 @@ public class DeckController {
 
         boolean isAdmin = authComponent.isRole("ADMIN");
         boolean isMe = authComponent.isMe(userId);
+        boolean isCollaborator = authComponent.isCollaborator(userId);
+        Long collaboratorId = authComponent.getUserId();
         PageRequest pageRequest = PageRequest.of(offset, pageSize, Sort.by(sortBy));
         Page<DeckResponse> decks;
 
         if (isAdmin || isMe){
             decks = deckService.getDecksByUserId(userId, pageRequest);
         }
+        if (isCollaborator){
+            decks = deckService.getDecksByCollaborator(userId, collaboratorId, pageRequest);
+        }
         else{
             decks = deckService.getPublicDecksByUserId(userId, pageRequest);
+
         }
         return ResponseEntity.ok(decks);
     }
@@ -65,5 +74,13 @@ public class DeckController {
         DeckResponse createdDeck = deckService.create(userId, deckResponse, authComponent.getUserName());
         return ResponseEntity.ok(createdDeck);
     }
+    @PostMapping("/user/{userId}/deck/{deckId}")
+    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
+    public ResponseEntity<Set<CollaboratorResponse>> addCollaborator(@PathVariable Long userId,
+                                                                @PathVariable Long deckId,
+                                                                @RequestBody CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
+        Set<CollaboratorResponse> collaborators = deckService.addCollaborator(deckId, collaboratorCreationUpdateRequest);
 
+        return ResponseEntity.ok(collaborators);
+    }
 }

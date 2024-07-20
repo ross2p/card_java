@@ -24,7 +24,6 @@ import java.time.Instant;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthComponent authComponent;
 
@@ -51,9 +50,8 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toEntity(userDto);
 
-        user.setRole(roleRepository.getOne(userDto.getRoleId()));
-        user.setCreatedAt(Instant.now());
-        user.setUpdatedOn(Instant.now());
+//        user.setRole(roleRepository.getOne(userDto.getRoleId()));
+//        user.setCreatedAt(Instant.now());
         user.setUpdatedBy(authComponent.getUserName());
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -66,10 +64,6 @@ public class UserServiceImpl implements UserService {
     public UserResponse update(Long id, UserCreationUpdateRequest userCreationUpdateRequest) {
         User user = getUserById(id);
         User updatedUser = userMapper.partialUpdate(userCreationUpdateRequest, user);
-
-        updatedUser.setUpdatedOn(Instant.now());
-        updatedUser.setUpdatedBy(authComponent.getUserName());
-
         updatedUser = userRepository.save(updatedUser);
 
         return userMapper.toDto(updatedUser);
