@@ -16,8 +16,8 @@ public interface CollaboratorMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Collaborator partialUpdate(CollaboratorResponse collaboratorResponse, @MappingTarget Collaborator collaborator);
 
-    @Mapping(target = "user",  source = "collaboratorResponse.userId", qualifiedByName = "getUserById")
-    @Mapping(target = "deck.id",  source = "deckId")
+    @Mapping(target = "user", source = "collaboratorResponse.userId", qualifiedByName = "getUserById")
+//    @Mapping(target = "deck.id", source = "deckId")
     Collaborator toEntity(CollaboratorCreationUpdateRequest collaboratorResponse, Long deckId);
 
 }
