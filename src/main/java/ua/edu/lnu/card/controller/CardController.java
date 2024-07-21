@@ -32,12 +32,9 @@ public class CardController {
     @PreAuthorize("@auth.isMe(#userId) or @auth.isCollaborator(#deckId) or hasRole('ADMIN')")
     public @ResponseBody ResponseEntity<Page<CardResponse>> getAllCards(@PathVariable Long userId,
                                                                         @PathVariable Long deckId,
-                                                                        @RequestParam(value = "offset", required = false) Integer offset,
-                                                                        @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                                                        @RequestParam(value = "sortBy", required = false) String sortBy) {
-        if(null == offset) offset = 0;
-        if(null == pageSize) pageSize = 10;
-        if(StringUtils.isEmpty(sortBy)) sortBy = "id";
+                                                                        @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                                                        @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                                                        @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
         PageRequest pageRequest = PageRequest.of(offset, pageSize, Sort.by(sortBy));
         Page<CardResponse> cards = cardService.getAllByDeckId(deckId, pageRequest);
         return ResponseEntity.ok(cards);

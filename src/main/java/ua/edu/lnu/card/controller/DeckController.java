@@ -24,25 +24,18 @@ public class DeckController {
     private final AuthComponent authComponent;
 
     @GetMapping("/decks")
-    public ResponseEntity<Page<DeckResponse>> getPublicDecks(@RequestParam(value = "offset", required = false) Integer offset,
-                                                       @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                                       @RequestParam(value = "sortBy", required = false) String sortBy) {
-
-        if(null == offset) offset = 0;
-        if(null == pageSize) pageSize = 10;
-        if(StringUtils.isEmpty(sortBy)) sortBy ="id";
+    public ResponseEntity<Page<DeckResponse>> getPublicDecks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                                             @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                                             @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
 
         Page<DeckResponse> decks = deckService.getPublicDecks(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
         return ResponseEntity.ok(decks);
     }
     @GetMapping("/user/{userId}/decks")
-    public ResponseEntity<Page<DeckResponse>> getDecksByUserId(@RequestParam(value = "offset", required = false) Integer offset,
-                                                               @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                                                               @RequestParam(value = "sortBy", required = false) String sortBy,
+    public ResponseEntity<Page<DeckResponse>> getDecksByUserId(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                                               @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
                                                                @PathVariable(value = "userId") Long userId) {
-        if(null == offset) offset = 0;
-        if(null == pageSize) pageSize = 10;
-        if(StringUtils.isEmpty(sortBy)) sortBy = "id";
 
         boolean isAdmin = authComponent.isRole("ADMIN");
         boolean isMe = authComponent.isMe(userId);

@@ -28,12 +28,9 @@ public class UserController {
     }
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<UserResponse>> getUsers(@RequestParam(value = "offset", required = false) Integer offset,
-                               @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                               @RequestParam(value = "sortBy", required = false) String sortBy) {
-        if(null == offset) offset = 0;
-        if(null == pageSize) pageSize = 10;
-        if(StringUtils.isEmpty(sortBy)) sortBy = "id";
+    public ResponseEntity<Page<UserResponse>> getUsers(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                               @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
 
         Page<UserResponse> users = userService.getUsersPage(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
         return ResponseEntity.ok(users);
