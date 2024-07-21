@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import ua.edu.lnu.card.dto.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dto.card.CardResponse;
 
-import java.util.List;
 
 public interface CardService {
     CardResponse readById(Long cardId);
