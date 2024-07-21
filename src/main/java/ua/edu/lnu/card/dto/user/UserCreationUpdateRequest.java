@@ -10,7 +10,6 @@ import java.time.LocalDate;
  */
 @Value
 public class UserCreationUpdateRequest implements Serializable {
-    Long id;
     String firstName;
     String lastName;
     String email;

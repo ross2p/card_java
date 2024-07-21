@@ -5,5 +5,5 @@ import java.io.Serializable;
 /**
  * DTO for {@link ua.edu.lnu.card.entity.Role}
  */
-public record RoleDto(Integer id, String name) implements Serializable {
+public record RoleResponse(Long id, String name) implements Serializable {
 }

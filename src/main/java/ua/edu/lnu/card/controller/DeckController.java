@@ -10,12 +10,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.config.AuthComponent;
 import ua.edu.lnu.card.dto.collaborator.CollaboratorCreationUpdateRequest;
-import ua.edu.lnu.card.dto.deck.CollaboratorResponse;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
 import ua.edu.lnu.card.service.DeckService;
 
-import java.util.Set;
 
 
 @RestController
@@ -42,7 +40,6 @@ public class DeckController {
                                                                @RequestParam(value = "pageSize", required = false) Integer pageSize,
                                                                @RequestParam(value = "sortBy", required = false) String sortBy,
                                                                @PathVariable(value = "userId") Long userId) {
-
         if(null == offset) offset = 0;
         if(null == pageSize) pageSize = 10;
         if(StringUtils.isEmpty(sortBy)) sortBy = "id";
@@ -57,12 +54,11 @@ public class DeckController {
         if (isAdmin || isMe){
             decks = deckService.getDecksByUserId(userId, pageRequest);
         }
-        if (isCollaborator){
+        else if (isCollaborator){
             decks = deckService.getDecksByCollaborator(userId, collaboratorId, pageRequest);
         }
         else{
             decks = deckService.getPublicDecksByUserId(userId, pageRequest);
-
         }
         return ResponseEntity.ok(decks);
     }
@@ -71,16 +67,30 @@ public class DeckController {
     @PreAuthorize("@auth.isMe(#userId)")
     public ResponseEntity<DeckResponse> createDeck(@PathVariable Long userId,
                                                    @RequestBody DeckCreationUpdateRequest deckResponse) {
-        DeckResponse createdDeck = deckService.create(userId, deckResponse, authComponent.getUserName());
+        DeckResponse createdDeck = deckService.create(userId, deckResponse);
         return ResponseEntity.ok(createdDeck);
     }
     @PostMapping("/user/{userId}/deck/{deckId}")
     @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
-    public ResponseEntity<Set<CollaboratorResponse>> addCollaborator(@PathVariable Long userId,
+    public ResponseEntity<DeckResponse> addCollaborator(        @PathVariable Long userId,
                                                                 @PathVariable Long deckId,
                                                                 @RequestBody CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
-        Set<CollaboratorResponse> collaborators = deckService.addCollaborator(deckId, collaboratorCreationUpdateRequest);
+        DeckResponse deckResponse = deckService.addCollaborator(deckId, collaboratorCreationUpdateRequest);
 
-        return ResponseEntity.ok(collaborators);
+        return ResponseEntity.ok(deckResponse);
+    }
+    @PutMapping("/user/{userId}/deck/{deckId}")
+    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
+    public ResponseEntity<DeckResponse> updateDeck(@PathVariable Long userId,
+                                                   @PathVariable Long deckId,
+                                                   @RequestBody DeckCreationUpdateRequest deckResponse) {
+        DeckResponse updatedDeck = deckService.update(deckId, deckResponse);
+        return ResponseEntity.ok(updatedDeck);
+    }
+    @DeleteMapping("/user/{userId}/deck/{deckId}")
+    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
+    public ResponseEntity<Void> deleteDeck(@PathVariable Long userId, @PathVariable Long deckId) {
+        deckService.delete(deckId);
+        return ResponseEntity.noContent().build();
     }
 }

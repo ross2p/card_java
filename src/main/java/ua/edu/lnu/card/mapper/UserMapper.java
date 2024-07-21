@@ -1,41 +1,47 @@
 package ua.edu.lnu.card.mapper;
 
 import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ua.edu.lnu.card.config.AuthComponent;
-import ua.edu.lnu.card.dto.user.AdminCreationUpdateRequest;
+import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
+import ua.edu.lnu.card.entity.Role;
 import ua.edu.lnu.card.entity.User;
-import ua.edu.lnu.card.repository.RoleRepository;
 
 import java.time.Instant;
 
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING
-        , imports = {Instant.class}
-        , uses = {AuthComponent.class})
-public interface UserMapper {
+@Mapper( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING
+        , imports = {Instant.class,AuthComponent.class, DefaultUserDetails.class, SecurityContextHolder.class}
+        , uses = { AuthComponent.class})
+public abstract class   UserMapper {
+    @Autowired
+    protected AuthComponent authComponent;
 
+    public abstract UserResponse toDto(User user);
 
-    UserResponse toDto(User user);
-
-    AdminCreationUpdateRequest toAdminDto(UserCreationUpdateRequest userCreationUpdateRequest, Long roleId);
-
-
-    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
-    @Mapping(target = "role.id",  source = "roleId")
     @Mapping(target = "createdAt", expression = "java(Instant.now())")
-    User toEntity(AdminCreationUpdateRequest adminCreationUpdateRequest);
-
+    @Mapping(target = "password", source = "password", qualifiedByName = "encodedPassword")
+    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", ignore = true)
+    public abstract User toEntity(UserCreationUpdateRequest adminCreationUpdateRequest);
+    @AfterMapping
+    void getUpdateBy(@MappingTarget User user){
+        if (authComponent.isRegistered()) {
+            user.setUpdatedBy(authComponent.getUserDetailsName());
+        }else{
+            user.setUpdatedBy(user.getEmail());
+        }
+        user.setRole(new Role(1L, "USER"));
+    }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "updatedOn", expression = "java(Instant.now())")
-    User partialUpdate(UserCreationUpdateRequest userCreationUpdateRequest, @MappingTarget User user);
-
-
-
-    User toEntity(UserResponse userResponse);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    User partialUpdate(UserResponse userResponse, @MappingTarget User user);
+    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
+    @Mapping(target = "password", source = "password", qualifiedByName = "encodedPassword")
+    public abstract User partialUpdate(UserCreationUpdateRequest userCreationUpdateRequest, @MappingTarget User user);
 }

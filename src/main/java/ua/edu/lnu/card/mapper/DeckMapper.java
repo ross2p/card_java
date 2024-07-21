@@ -1,28 +1,43 @@
 package ua.edu.lnu.card.mapper;
 
 import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import ua.edu.lnu.card.config.AuthComponent;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
 import ua.edu.lnu.card.entity.Deck;
+import ua.edu.lnu.card.service.DeckService;
+import ua.edu.lnu.card.service.UserService;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {UserMapper.class, CollaboratorMapper.class})
-public interface DeckMapper {
+import java.time.Instant;
 
-    Deck toEntity(DeckCreationUpdateRequest deckCreationUpdateRequest);
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        uses = {UserMapper.class, CollaboratorMapper.class, DeckService.class, UserService.class},
+        imports = {Instant.class, AuthComponent.class})
+public abstract class DeckMapper {
+
+
+    @Autowired
+    protected AuthComponent authComponent;
+
+
+    @Mapping(target = "owner", source = "ownerId", qualifiedByName = "getUserById")
+    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
+    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
+    public abstract Deck toEntity(DeckCreationUpdateRequest deckCreationUpdateRequest, Long ownerId);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Deck partialUpdate(DeckCreationUpdateRequest deckCreationUpdateRequest, @MappingTarget Deck deck);
+    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
+    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
+    public abstract Deck partialUpdate(DeckCreationUpdateRequest deckCreationUpdateRequest, @MappingTarget Deck deck);
 
+    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
+    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
+    public abstract Deck toEntity(DeckResponse deckResponse);
 
-    Deck toEntity(DeckResponse deckResponse);
-
-    @AfterMapping
-    default void linkCollaborators(@MappingTarget Deck deck) {
-        deck.getCollaborators().forEach(collaborator -> collaborator.setDeck(deck));
-    }
-
-    DeckResponse toDto(Deck deck);
+    public abstract DeckResponse toDto(Deck deck);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Deck partialUpdate(DeckResponse deckResponse, @MappingTarget Deck deck);
+    public abstract Deck partialUpdate(DeckResponse deckResponse, @MappingTarget Deck deck);
 }

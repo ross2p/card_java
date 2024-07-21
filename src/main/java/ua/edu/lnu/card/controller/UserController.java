@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
-import ua.edu.lnu.card.entity.User;
 import ua.edu.lnu.card.service.UserService;
 
 
@@ -47,6 +46,7 @@ public class UserController {
         UserResponse updatedUser = userService.update(userId, userCreationUpdateRequest);
         return ResponseEntity.ok(updatedUser);
     }
+
     @DeleteMapping("/user/{userId}")
     @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
@@ -54,5 +54,11 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/user{userId}/role")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponse> updateUserRole(@PathVariable Long userId, @RequestBody Long roleId){
+        UserResponse updatedUser = userService.updateRole(userId, roleId);
+        return ResponseEntity.ok(updatedUser);
+    }
 
 }

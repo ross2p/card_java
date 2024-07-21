@@ -8,5 +8,5 @@ import java.io.Serializable;
 /**
  * DTO for {@link ua.edu.lnu.card.entity.Collaborator}
  */
-public record CollaboratorResponse(Integer id, UserResponse user, AccessLevel accessLevel) implements Serializable {
+public record CollaboratorResponse(Long id, UserResponse user, AccessLevel accessLevel) implements Serializable {
 }

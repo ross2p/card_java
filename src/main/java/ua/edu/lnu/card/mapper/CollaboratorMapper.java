@@ -1,21 +1,23 @@
 package ua.edu.lnu.card.mapper;
 
 import org.mapstruct.*;
+import ua.edu.lnu.card.dto.collaborator.CollaboratorCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.CollaboratorResponse;
 import ua.edu.lnu.card.entity.Collaborator;
+import ua.edu.lnu.card.service.UserService;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        uses = {UserService.class})
 public interface CollaboratorMapper {
-    Collaborator toEntity(CollaboratorResponse collaboratorResponse);
 
     CollaboratorResponse toDto(Collaborator collaborator);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Collaborator partialUpdate(CollaboratorResponse collaboratorResponse, @MappingTarget Collaborator collaborator);
 
-//    @Mapping(source = "collaboratorResponse.userId", target = "user.id")
-//    @Mapping(source = "deskId", target = "deck.id")
-//    @Mapping(target = "id", expression = "java(Coll)")
-//    Collaborator toEntity(CollaboratorCreationUpdateRequest collaboratorResponse, Long deskId);
+    @Mapping(target = "user",  source = "collaboratorResponse.userId", qualifiedByName = "getUserById")
+    @Mapping(target = "deck.id",  source = "deckId")
+    Collaborator toEntity(CollaboratorCreationUpdateRequest collaboratorResponse, Long deckId);
 
 }

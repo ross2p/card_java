@@ -2,7 +2,6 @@ package ua.edu.lnu.card.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.auth.JwtAuthenticationResponse;
 import ua.edu.lnu.card.dto.auth.LoginAuthentication;
-import ua.edu.lnu.card.dto.user.AdminCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.service.UserService;
@@ -33,20 +31,9 @@ public class AuthController {
     private final JwtUtils jwtUtils;
 
     private final UserService userService;
-
-    @PostMapping("/register/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> registerByAdmin(@RequestBody AdminCreationUpdateRequest userCreationRequest, UriComponentsBuilder ucb) {
-        UserResponse userResponse = userService.create(userCreationRequest);
-
-        URI location = ucb
-                .path("/api/users/{userId}")
-                .buildAndExpand(userResponse.id())
-                .toUri();
-        return ResponseEntity.created(location).body(userResponse);
-    }
     @PostMapping("/register")
-    public ResponseEntity<?> registerByUser(@RequestBody UserCreationUpdateRequest userCreationRequest, UriComponentsBuilder ucb) {
+    public ResponseEntity<?> register(@RequestBody UserCreationUpdateRequest userCreationRequest, UriComponentsBuilder ucb) {
+        System.out.println("register "+userCreationRequest.toString());
         UserResponse userResponse = userService.create(userCreationRequest);
 
         URI location = ucb
