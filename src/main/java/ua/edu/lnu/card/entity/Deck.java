@@ -37,7 +37,7 @@ public class Deck {
     @Column(name = "updated_by", length = 100)
     private String updatedBy;
 
-    @OneToMany(mappedBy = "deck")
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
     private Set<Collaborator> collaborators = new LinkedHashSet<>();
 
     @Override

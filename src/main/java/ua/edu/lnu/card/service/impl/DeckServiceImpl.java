@@ -43,7 +43,7 @@ public class DeckServiceImpl implements DeckService {
 
     @Override
     public Page<DeckResponse> getPublicDecksByUserId(Long userId, PageRequest pageRequest) {
-        return deckRepository.findByIsprivateFalse(pageRequest).map(deckMapper::toDto); //todo fix
+        return deckRepository.findByIsprivateFalse(pageRequest).map(deckMapper::toDto);
 
     }
 
@@ -52,15 +52,14 @@ public class DeckServiceImpl implements DeckService {
 
         Deck newDeck = deckMapper.toEntity(deckResponse, userId);
 
+        Collaborator collaborator = collaboratorMapper.toEntity(userId, AccessLevel.OWNER);
+        collaborator.setDeck(newDeck);
+        newDeck.getCollaborators().add(collaborator);
+
         newDeck = deckRepository.save(newDeck);
-
-        CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest = CollaboratorCreationUpdateRequest.builder()
-                .userId(userId)
-                .accessLevel(AccessLevel.OWNER)
-                .build();
-
-        return addCollaborator(newDeck.getId(), collaboratorCreationUpdateRequest);
+        return deckMapper.toDto(newDeck);
     }
+
 
     @Override
     public Page<DeckResponse> getDecksByCollaborator(Long userId, Long collaboratorId, PageRequest pageRequest) {
@@ -72,12 +71,13 @@ public class DeckServiceImpl implements DeckService {
     @Override
     public DeckResponse addCollaborator(Long deckId, CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
 
-        Collaborator collaborator = collaboratorMapper.toEntity(collaboratorCreationUpdateRequest, deckId);
-        Collaborator savedCollaborator = collaboratorRepository.save(collaborator);
+        Collaborator collaborator = collaboratorMapper.toEntity(collaboratorCreationUpdateRequest);
+        Deck deck = getDeckById(deckId);
 
-        Deck updatedDeck = getDeckById(deckId);
-        updatedDeck.getCollaborators().add(savedCollaborator);
-        updatedDeck = deckRepository.save(updatedDeck);
+        collaborator.setDeck(deck);
+        deck.getCollaborators().add(collaborator);
+
+        Deck updatedDeck = deckRepository.save(deck);
 
         return deckMapper.toDto(updatedDeck);
     }
