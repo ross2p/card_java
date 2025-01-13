@@ -3,6 +3,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import lombok.Builder;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -12,6 +13,8 @@ import java.time.LocalDate;
  * DTO for {@link ua.edu.lnu.card.entity.User}
  */
 @Value
+@Builder
+
 public class UserCreationUpdateRequest implements Serializable {
 
     @NotBlank(message = "Refresh token is required")
