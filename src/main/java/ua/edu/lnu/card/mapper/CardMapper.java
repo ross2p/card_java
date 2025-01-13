@@ -1,31 +1,29 @@
 package ua.edu.lnu.card.mapper;
 
 import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import ua.edu.lnu.card.config.AuthComponent;
 import ua.edu.lnu.card.dto.card.CardCreationUpdateRequest;
-import ua.edu.lnu.card.dto.card.CardResponse;
+import ua.edu.lnu.card.dto.card.CardData;
 import ua.edu.lnu.card.entity.Card;
 
-import java.time.Instant;
+import java.util.UUID;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        componentModel = MappingConstants.ComponentModel.SPRING,
-        uses = {AuthComponent.class},
-        imports = {Instant.class})
-public abstract class CardMapper {
-    @Autowired
-    protected AuthComponent authComponent;
-    public abstract CardResponse toDto(Card card);
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+public interface CardMapper {
+    Card toEntity(CardData cardData);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "deck.id", source = "deckId")
-    @Mapping(target = "updatedOn",expression = "java(Instant.now())")
-    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
-    public abstract Card toEntity(CardCreationUpdateRequest cardCreationUpdateRequest, Long deckId);
+    CardData toDto(Card card);
 
-    @Mapping(target = "updatedOn",expression = "java(Instant.now())")
-    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract  Card partialUpdate(CardCreationUpdateRequest cardCreationUpdateRequest, @MappingTarget Card card);
+    Card partialUpdate(CardData cardData, @MappingTarget Card card);
+
+
+    @Mapping(source = "deckId", target = "deck.id")
+    Card toEntity(CardCreationUpdateRequest cardCreationUpdateRequest);
+
+    @Mapping(source = "deck.id", target = "deckId")
+    CardCreationUpdateRequest toDto1(Card card);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "deckId", target = "deck.id")
+    Card partialUpdate(CardCreationUpdateRequest cardCreationUpdateRequest, @MappingTarget Card card);
 }

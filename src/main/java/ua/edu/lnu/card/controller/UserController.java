@@ -5,56 +5,44 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
+import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.service.UserService;
 
 
+import java.util.UUID;
+
 @RestController
+@RequestMapping("/user")
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId) {
-        UserResponse userResponse = userService.getById(userId);
-        return ResponseEntity.ok(userResponse);
-    }
-    @GetMapping("/users")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<UserResponse>> getUsers(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                               @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
-
-        Page<UserResponse> users = userService.getUsersPage(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
-        return ResponseEntity.ok(users);
+    @GetMapping
+    public ResponseEntity<UserResponse> getMyDetails(@AuthenticationPrincipal DefaultUserDetails userDetails) {
+        System.out.println("userDetails" + userDetails);
+        UUID userId = userDetails.getId();
+        UserResponse user = userService.getById(userId);
+        return ResponseEntity.ok(user);
     }
 
-    @PutMapping("/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long userId,
-                                                   @RequestBody UserCreationUpdateRequest userCreationUpdateRequest) {
+    @PatchMapping
+    public ResponseEntity<UserResponse> updateMyDetails(@AuthenticationPrincipal DefaultUserDetails userDetails,
+                                                        @RequestBody UserCreationUpdateRequest userCreationUpdateRequest) {
+        UUID userId = userDetails.getId();
+        System.out.println("updateMyDetails " + userCreationUpdateRequest.toString());
         UserResponse updatedUser = userService.update(userId, userCreationUpdateRequest);
         return ResponseEntity.ok(updatedUser);
     }
 
-    @DeleteMapping("/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteMyAccount(@AuthenticationPrincipal DefaultUserDetails userDetails) {
+        UUID userId = userDetails.getId();
         userService.delete(userId);
         return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/user{userId}/role")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponse> updateUserRole(@PathVariable Long userId, @RequestBody Long roleId){
-        UserResponse updatedUser = userService.updateRole(userId, roleId);
-        return ResponseEntity.ok(updatedUser);
     }
 
 }

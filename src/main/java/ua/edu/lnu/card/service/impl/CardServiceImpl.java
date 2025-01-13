@@ -1,56 +1,50 @@
 package ua.edu.lnu.card.service.impl;
 
-
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.card.CardCreationUpdateRequest;
-import ua.edu.lnu.card.dto.card.CardResponse;
+import ua.edu.lnu.card.dto.card.CardData;
 import ua.edu.lnu.card.entity.Card;
 import ua.edu.lnu.card.mapper.CardMapper;
 import ua.edu.lnu.card.repository.CardRepository;
 import ua.edu.lnu.card.service.CardService;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
-    private final CardRepository cardRepository;
     private final CardMapper cardMapper;
+    private final CardRepository cardRepository;
 
-    private Card getCardById(Long id){
-        return cardRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Card with id " + id + " not found"));
+    @Override
+    public CardData readById(UUID cardId) {
+        return null;
     }
 
     @Override
-    public CardResponse readById(Long cardId) {
-        Card card = getCardById(cardId);
-        return cardMapper.toDto(card);
+    public List<CardData> getAllByDeckId(UUID deckId) {
+        return cardRepository.findByDeck_IdOrderByCreatedAtAsc(deckId).stream().map(cardMapper::toDto).collect(Collectors.toList());
     }
-
 
     @Override
-    public Page<CardResponse> getAllByDeckId(Long deckId, PageRequest pageRequest) {
-        return cardRepository.findAllByDeckId(deckId, pageRequest)
-                .map(cardMapper::toDto);
+    public Card create( CardCreationUpdateRequest cardDto) {
+        Card cardToUpdate = cardMapper.toEntity(cardDto);
+
+        return cardRepository.save(cardToUpdate);
     }
 
-    public CardResponse create(Long deckId, CardCreationUpdateRequest cardDto) {
-        Card card = cardMapper.toEntity(cardDto, deckId);
-        card = cardRepository.save(card);
-        return cardMapper.toDto(card);
-    }
-    public CardResponse update(Long cardId, CardCreationUpdateRequest cardDto) {
-        Card cardToUpdate = getCardById(cardId);
-        Card updatedCard = cardMapper.partialUpdate(cardDto, cardToUpdate);
-        return cardMapper.toDto(updatedCard);
-    }
-    public void delete(Long cardId) {
-        Card card = getCardById(cardId);
-        cardRepository.delete(card);
+    @Override
+    public CardData update(UUID cardId, CardCreationUpdateRequest cardDto) {
+        return null;
     }
 
+    @Override
+    public void delete(UUID cardId) {
 
+    }
 }

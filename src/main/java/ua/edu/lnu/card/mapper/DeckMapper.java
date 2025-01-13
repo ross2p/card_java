@@ -2,42 +2,71 @@ package ua.edu.lnu.card.mapper;
 
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.edu.lnu.card.config.AuthComponent;
+import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
+import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.entity.Deck;
-import ua.edu.lnu.card.service.DeckService;
-import ua.edu.lnu.card.service.UserService;
+import ua.edu.lnu.card.entity.User;
+import ua.edu.lnu.card.utils.enums.AccessLevel;
 
-import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
+
+@Mapper(
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
         componentModel = MappingConstants.ComponentModel.SPRING,
-        uses = {UserMapper.class, CollaboratorMapper.class, DeckService.class, UserService.class},
-        imports = {Instant.class, AuthComponent.class})
+        uses = {UserMapper.class}
+)
 public abstract class DeckMapper {
 
-
     @Autowired
-    protected AuthComponent authComponent;
+    protected UserMapper userMapper;
 
-
-    @Mapping(target = "owner", source = "ownerId", qualifiedByName = "getUserById")
-    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
-    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
-    public abstract Deck toEntity(DeckCreationUpdateRequest deckCreationUpdateRequest, Long ownerId);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
-    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
-    public abstract Deck partialUpdate(DeckCreationUpdateRequest deckCreationUpdateRequest, @MappingTarget Deck deck);
-
-    @Mapping(target = "updatedOn", expression = "java(Instant.now())")
-    @Mapping(target = "updatedBy", expression = "java(authComponent.getUserDetailsName())")
-    public abstract Deck toEntity(DeckResponse deckResponse);
-
+    @Mapping(source = "collaborator", target = "userAccessLevel", qualifiedByName = "mapCollaboratorsToDto")
     public abstract DeckResponse toDto(Deck deck);
 
+    @Named("mapCollaboratorsToDto")
+    protected Map<UserResponse, AccessLevel> mapCollaboratorsToDto(Map<User, AccessLevel> collaborator) {
+        System.out.println("userMapper"+userMapper);
+        if (collaborator == null) {
+            return null;
+        }
+
+        Map<UserResponse, AccessLevel> mappedCollaborators = new HashMap<>();
+        for (Map.Entry<User, AccessLevel> entry : collaborator.entrySet()) {
+            if (entry.getKey() != null && entry.getValue() != null) {
+                mappedCollaborators.put(userMapper.toDto(entry.getKey()), entry.getValue());
+            }
+        }
+        return mappedCollaborators;
+    }
+
+    @Mapping(source = "userId", target = "owner.id")
+    @Mapping(target = "isPrivate", defaultValue = "true")
+    @Mapping(source = "deckCreationUpdateRequest.userAccessLevel", target = "collaborator", qualifiedByName = "mapCollaboratorsToEntity")
+    public abstract Deck toEntity(DeckCreationUpdateRequest deckCreationUpdateRequest, UUID userId);
+
+    @Named("mapCollaboratorsToEntity")
+    protected Map<User, AccessLevel> mapCollaboratorsToEntity(Map<UUID, AccessLevel> userAccessLevel) {
+        if (userAccessLevel == null) {
+            return null;
+        }
+
+        Map<User, AccessLevel> mappedCollaborators = new HashMap<>();
+        for (Map.Entry<UUID, AccessLevel> entry : userAccessLevel.entrySet()) {
+            if (entry.getKey() != null && entry.getValue() != null) {
+                User user = new User();
+                user.setId(entry.getKey());
+                mappedCollaborators.put(user, entry.getValue());
+            }
+        }
+        return mappedCollaborators;
+    }
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract Deck partialUpdate(DeckResponse deckResponse, @MappingTarget Deck deck);
+    @Mapping(source = "userAccessLevel", target = "collaborator", qualifiedByName = "mapCollaboratorsToEntity")
+    public abstract Deck partialUpdate(DeckCreationUpdateRequest deckCreationUpdateRequest, @MappingTarget Deck deck);
 }

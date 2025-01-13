@@ -3,9 +3,11 @@ package ua.edu.lnu.card.dto.auth;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ua.edu.lnu.card.dto.role.RoleResponse;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -13,8 +15,9 @@ import java.util.HashSet;
 @AllArgsConstructor
 @ToString
 public class DefaultUserDetails implements UserDetails {
-    private Long id;
+    private UUID id;
     private String email;
+    private RoleResponse role;
     private String password;
 
     @Builder.Default

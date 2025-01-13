@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.entity;
+package ua.edu.lnu.card.utils.enums;
 
 import lombok.ToString;
 
@@ -7,4 +7,5 @@ public enum AccessLevel {
     OWNER,
     READ,
     EDIT,
+    ADMIN,
 }

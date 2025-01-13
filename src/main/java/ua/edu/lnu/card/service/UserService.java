@@ -7,18 +7,16 @@ import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.entity.User;
 
+import java.util.UUID;
+
 public interface UserService {
-    @Named("getUserById")
-    User getUserById(Long id);
-    UserResponse getById(Long userId);
+    User getUserById(UUID id);
 
-    UserResponse create(UserCreationUpdateRequest userCreationRequest);
+    UserResponse getById(UUID userId);
 
-    UserResponse update(Long id, UserCreationUpdateRequest userCreationUpdateRequest);
+    User create(UserCreationUpdateRequest userCreationRequest);
 
-    void delete(Long id);
+    UserResponse update(UUID id, UserCreationUpdateRequest userCreationUpdateRequest);
 
-    Page<UserResponse> getUsersPage(PageRequest of);
-
-    UserResponse updateRole(Long userId, Long roleId);
+    void delete(UUID id);
 }

@@ -5,6 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.edu.lnu.card.entity.Card;
 
-public interface CardRepository extends JpaRepository<Card, Long> {
-    Page<Card> findAllByDeckId(Long deckId, Pageable pageable);
+import java.util.List;
+import java.util.UUID;
+
+public interface CardRepository extends JpaRepository<Card, UUID> {
+    List<Card> findByDeck_IdOrderByCreatedAtAsc(UUID id);
 }

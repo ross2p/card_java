@@ -4,13 +4,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import ua.edu.lnu.card.entity.Deck;
+import ua.edu.lnu.card.utils.enums.AccessLevel;
+
+import java.util.Map;
+import java.util.UUID;
 
 
-public interface DeckRepository extends JpaRepository<Deck, Long> {
-    Page<Deck> findByCollaborators_IdAndOwner_IdOrIsprivateTrueAndOwner_Id(Long id, Long id1, Long id2, Pageable pageable);
-    Page<Deck> findByCollaborators_IdAndOwner_Id(Integer id, Long id1, Pageable pageable);
-    boolean existsByOwner_IdAndId(Long id, Long id1);
-    Page<Deck> findByIsprivateFalse(PageRequest pageRequest);
-    Page<Deck> findByOwnerId(Long userId, PageRequest pageRequest);
+public interface DeckRepository extends JpaRepository<Deck, UUID> {
+    @Query("""
+        SELECT d FROM Deck d
+        LEFT JOIN d.collaborator c
+        WHERE d.owner.id = :userId
+        OR (KEY(c).id = :userId AND c = :accessLevel)
+    """)
+    Page<Deck> findDecksByOwnerOrCollaboratorWithStatus(@Param("userId") UUID userId, @Param("accessLevel") AccessLevel accessLevel, Pageable pageable);
 }

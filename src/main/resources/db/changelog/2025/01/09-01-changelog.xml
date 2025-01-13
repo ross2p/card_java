@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1736374686821-1" author="rostyslavpasternak (generated)">
+        <createTable tableName="card">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_card"/>
+            </column>
+            <column name="deck_id" type="UUID"/>
+            <column name="key" type="VARCHAR(100)"/>
+            <column name="value" type="VARCHAR(100)"/>
+            <column name="description" type="text(2147483647)"/>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1736374686821-2" author="rostyslavpasternak (generated)">
+        <createTable tableName="deck_collaborator">
+            <column name="deck_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_deck_collaborator"/>
+            </column>
+            <column name="collaborator" type="SMALLINT"/>
+            <column name="collaborator_key" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_deck_collaborator"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1736374686821-3" author="rostyslavpasternak (generated)">
+        <createTable tableName="decks">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_decks"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text(2147483647)"/>
+            <column name="owner_id" type="UUID"/>
+            <column name="is_private" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1736374686821-4" author="rostyslavpasternak (generated)">
+        <createTable tableName="roles">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_roles"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1736374686821-5" author="rostyslavpasternak (generated)">
+        <createTable tableName="users">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birthdate" type="DATE"/>
+            <column name="role_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1736374686821-6" author="rostyslavpasternak (generated)">
+        <addUniqueConstraint columnNames="email" constraintName="uc_users_email" tableName="users"/>
+    </changeSet>
+    <changeSet id="1736374686821-7" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="deck_id" baseTableName="card" constraintName="FK_CARD_ON_DECK"
+                                 referencedColumnNames="id" referencedTableName="decks"/>
+    </changeSet>
+    <changeSet id="1736374686821-8" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="decks" constraintName="FK_DECKS_ON_OWNER"
+                                 referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1736374686821-9" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users" constraintName="FK_USERS_ON_ROLE"
+                                 referencedColumnNames="id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet id="1736374686821-10" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="deck_id" baseTableName="deck_collaborator"
+                                 constraintName="fk_deck_collaborator_on_deck" referencedColumnNames="id"
+                                 referencedTableName="decks"/>
+    </changeSet>
+    <changeSet id="1736374686821-11" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="collaborator_key" baseTableName="deck_collaborator"
+                                 constraintName="fk_deck_collaborator_on_user" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>

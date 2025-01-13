@@ -5,84 +5,60 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.lnu.card.config.AuthComponent;
-import ua.edu.lnu.card.dto.collaborator.CollaboratorCreationUpdateRequest;
+import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
 import ua.edu.lnu.card.service.DeckService;
 
-
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/deck")
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class DeckController {
     private final DeckService deckService;
-    private final AuthComponent authComponent;
 
-    @GetMapping("/decks")
-    public ResponseEntity<Page<DeckResponse>> getPublicDecks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                                             @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                                                             @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
+//    @GetMapping("/user/{userId}")
+//    public ResponseEntity<Page<DeckResponse>> getByUserId(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+//                                                         @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+//                                                         @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
+//                                                         @PathVariable(value = "userId") UUID userId) {
+//
+//        Page<DeckResponse> comments = deckService.getDecksByUserId(userId, PageRequest.of(offset, pageSize, Sort.by(sortBy)));
+//        return ResponseEntity.ok(comments);
+//    }
+//    @GetMapping
+//    public ResponseEntity<Page<DeckResponse>> getAllPublic(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+//                                                          @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+//                                                          @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
+//
+//        Page<DeckResponse> comments = deckService.getAllPublic(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
+//        return ResponseEntity.ok(comments);
+//    }
 
-        Page<DeckResponse> decks = deckService.getPublicDecks(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
-        return ResponseEntity.ok(decks);
-    }
-    @GetMapping("/user/{userId}/decks")
-    public ResponseEntity<Page<DeckResponse>> getDecksByUserId(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                                                               @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
-                                                               @PathVariable(value = "userId") Long userId) {
-
-        boolean isAdmin = authComponent.isRole("ADMIN");
-        boolean isMe = authComponent.isMe(userId);
-        boolean isCollaborator = authComponent.isCollaborator(userId);
-        Long collaboratorId = authComponent.getUserId();
-        PageRequest pageRequest = PageRequest.of(offset, pageSize, Sort.by(sortBy));
-        Page<DeckResponse> decks;
-
-        if (isAdmin || isMe){
-            decks = deckService.getDecksByUserId(userId, pageRequest);
-        }
-        else if (isCollaborator){
-            decks = deckService.getDecksByCollaborator(userId, collaboratorId, pageRequest);
-        }
-        else{
-            decks = deckService.getPublicDecksByUserId(userId, pageRequest);
-        }
-        return ResponseEntity.ok(decks);
+    @PostMapping
+    public ResponseEntity<DeckResponse> create(@RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest,
+                                               @AuthenticationPrincipal DefaultUserDetails userDetails) {
+        System.out.println("create " + deckCreationUpdateRequest.toString());
+        UUID userId = userDetails.getId();
+        DeckResponse newDeck = deckService.create(userId, deckCreationUpdateRequest);
+        return ResponseEntity.ok(newDeck);
     }
 
-    @PostMapping("/user/{userId}/deck")
-    @PreAuthorize("@auth.isMe(#userId)")
-    public ResponseEntity<DeckResponse> createDeck(@PathVariable Long userId,
-                                                   @RequestBody DeckCreationUpdateRequest deckResponse) {
-        DeckResponse createdDeck = deckService.create(userId, deckResponse);
-        return ResponseEntity.ok(createdDeck);
+    @GetMapping("/{deckId}")
+    public ResponseEntity<DeckResponse> getById(@PathVariable UUID deckId) {
+        System.out.println("getById " + deckId.toString());
+        DeckResponse deck = deckService.getById(deckId);
+        return ResponseEntity.ok(deck);
     }
-    @PostMapping("/user/{userId}/deck/{deckId}")
-    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
-    public ResponseEntity<DeckResponse> addCollaborator(        @PathVariable Long userId,
-                                                                @PathVariable Long deckId,
-                                                                @RequestBody CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
-        DeckResponse deckResponse = deckService.addCollaborator(deckId, collaboratorCreationUpdateRequest);
 
-        return ResponseEntity.ok(deckResponse);
-    }
-    @PutMapping("/user/{userId}/deck/{deckId}")
-    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
-    public ResponseEntity<DeckResponse> updateDeck(@PathVariable Long userId,
-                                                   @PathVariable Long deckId,
-                                                   @RequestBody DeckCreationUpdateRequest deckResponse) {
-        DeckResponse updatedDeck = deckService.update(deckId, deckResponse);
+    @PatchMapping("/{deckId}")
+    public ResponseEntity<DeckResponse> update(@PathVariable UUID deckId,
+                                               @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
+        System.out.println("update " + deckCreationUpdateRequest.toString());
+        DeckResponse updatedDeck = deckService.update(deckId, deckCreationUpdateRequest);
         return ResponseEntity.ok(updatedDeck);
-    }
-    @DeleteMapping("/user/{userId}/deck/{deckId}")
-    @PreAuthorize("hasRole('ADMIN') or @auth.isMe(#userId)")
-    public ResponseEntity<Void> deleteDeck(@PathVariable Long userId, @PathVariable Long deckId) {
-        deckService.delete(deckId);
-        return ResponseEntity.noContent().build();
     }
 }
