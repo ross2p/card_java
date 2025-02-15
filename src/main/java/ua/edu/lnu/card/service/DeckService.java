@@ -1,11 +1,10 @@
 package ua.edu.lnu.card.service;
 
-import org.mapstruct.Named;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.entity.Deck;
+import ua.edu.lnu.card.dto.deck.DeckResponseWithCards;
 
 import java.util.UUID;
 
@@ -14,15 +13,14 @@ public interface DeckService {
 
     Page<DeckResponse> getDecksByUserId(UUID userId, PageRequest pageRequest);
 
-    Page<DeckResponse> getAllPublic(PageRequest of);
+    Page<DeckResponse> getAllPublicDeck(PageRequest of);
 
-    DeckResponse create(UUID userId, DeckCreationUpdateRequest deckResponse);
+    DeckResponse createDeck(UUID userId, DeckCreationUpdateRequest deckResponse);
 
-    Page<DeckResponse> getDecksByCollaborator(UUID userId, UUID collaboratorId, PageRequest pageRequest);
+    DeckResponse updateDeck(UUID deckId, DeckCreationUpdateRequest deckResponse);
 
-    DeckResponse update(UUID deckId, DeckCreationUpdateRequest deckResponse);
+    void deleteDeck(UUID deckId);
 
-    void delete(UUID deckId);
+    DeckResponseWithCards getDeckDtoById(UUID deckId);
 
-    DeckResponse getById(UUID deckId);
 }

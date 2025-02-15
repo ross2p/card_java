@@ -1,6 +1,5 @@
 package ua.edu.lnu.card.service;
 
-import org.mapstruct.Named;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
@@ -12,11 +11,13 @@ import java.util.UUID;
 public interface UserService {
     User getUserById(UUID id);
 
-    UserResponse getById(UUID userId);
+    UserResponse getUserDtoById(UUID userId);
 
-    User create(UserCreationUpdateRequest userCreationRequest);
+    User createUser(UserCreationUpdateRequest userCreationRequest);
 
-    UserResponse update(UUID id, UserCreationUpdateRequest userCreationUpdateRequest);
+    UserResponse updateUser(UUID id, UserCreationUpdateRequest userCreationUpdateRequest);
 
-    void delete(UUID id);
+    void deleteUser(UUID id);
+
+    Page<UserResponse> getAllPopularUsers(PageRequest of);
 }

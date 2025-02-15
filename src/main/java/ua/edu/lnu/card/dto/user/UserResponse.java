@@ -1,6 +1,6 @@
 package ua.edu.lnu.card.dto.user;
 
-import lombok.Value;
+import lombok.Data;
 import ua.edu.lnu.card.dto.role.RoleResponse;
 
 import java.io.Serializable;
@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * DTO for {@link ua.edu.lnu.card.entity.User}
  */
-@Value
+@Data
 public class UserResponse implements Serializable {
     UUID id;
     String firstName;

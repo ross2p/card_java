@@ -1,6 +1,8 @@
 package ua.edu.lnu.card.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dto.user.UserResponse;
@@ -10,7 +12,6 @@ import ua.edu.lnu.card.mapper.UserMapper;
 import ua.edu.lnu.card.repository.RoleRepository;
 import ua.edu.lnu.card.repository.UserRepository;
 import ua.edu.lnu.card.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import ua.edu.lnu.card.utils.Constant;
 
 import java.util.UUID;
@@ -30,12 +31,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getById(UUID userId) {
+    public UserResponse getUserDtoById(UUID userId) {
         return userMapper.toDto(this.getUserById(userId));
     }
 
     @Override
-    public User create(UserCreationUpdateRequest userCreationRequest) {
+    public User createUser(UserCreationUpdateRequest userCreationRequest) {
         User newUser = userMapper.toEntity(userCreationRequest);
         if (newUser.getRole() == null) {
             newUser.setRole(roleRepository.findByName(Constant.DEFAULT_ROLE));
@@ -44,14 +45,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse update(UUID userId, UserCreationUpdateRequest userCreationUpdateRequest) {
+    public UserResponse updateUser(UUID userId, UserCreationUpdateRequest userCreationUpdateRequest) {
         User user = this.getUserById(userId);
         user = userMapper.partialUpdate(userCreationUpdateRequest, user);
         return userMapper.toDto(userRepository.save(user));
     }
 
     @Override
-    public void delete(UUID id) {
+    public void deleteUser(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<UserResponse> getAllPopularUsers(PageRequest of) {
+        return userRepository.findAll(of).map(userMapper::toDto);
     }
 }

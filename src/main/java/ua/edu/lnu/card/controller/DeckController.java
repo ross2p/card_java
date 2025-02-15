@@ -8,10 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
+import ua.edu.lnu.card.dto.card.CardData;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
+import ua.edu.lnu.card.dto.deck.DeckRatingCreationRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
+import ua.edu.lnu.card.entity.DeckRating;
+import ua.edu.lnu.card.service.CardService;
+import ua.edu.lnu.card.service.DeckRatingService;
 import ua.edu.lnu.card.service.DeckService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,46 +25,51 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DeckController {
     private final DeckService deckService;
-
-//    @GetMapping("/user/{userId}")
-//    public ResponseEntity<Page<DeckResponse>> getByUserId(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-//                                                         @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-//                                                         @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
-//                                                         @PathVariable(value = "userId") UUID userId) {
-//
-//        Page<DeckResponse> comments = deckService.getDecksByUserId(userId, PageRequest.of(offset, pageSize, Sort.by(sortBy)));
-//        return ResponseEntity.ok(comments);
-//    }
-//    @GetMapping
-//    public ResponseEntity<Page<DeckResponse>> getAllPublic(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-//                                                          @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-//                                                          @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
-//
-//        Page<DeckResponse> comments = deckService.getAllPublic(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
-//        return ResponseEntity.ok(comments);
-//    }
+    private final CardService cardService;
+    private final DeckRatingService deckRatingService;
 
     @PostMapping
     public ResponseEntity<DeckResponse> create(@RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest,
                                                @AuthenticationPrincipal DefaultUserDetails userDetails) {
-        System.out.println("create " + deckCreationUpdateRequest.toString());
         UUID userId = userDetails.getId();
-        DeckResponse newDeck = deckService.create(userId, deckCreationUpdateRequest);
+        DeckResponse newDeck = deckService.createDeck(userId, deckCreationUpdateRequest);
         return ResponseEntity.ok(newDeck);
     }
 
     @GetMapping("/{deckId}")
     public ResponseEntity<DeckResponse> getById(@PathVariable UUID deckId) {
-        System.out.println("getById " + deckId.toString());
-        DeckResponse deck = deckService.getById(deckId);
+        DeckResponse deck = deckService.getDeckDtoById(deckId);
         return ResponseEntity.ok(deck);
+    }
+
+    @GetMapping("/{deckId}/cards")
+    public ResponseEntity<List<CardData>> getCardByDeckId(@PathVariable UUID deckId) {
+        List<CardData> card = cardService.getAllByDeckId(deckId);
+        return ResponseEntity.ok(card);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<DeckResponse>> getAllPublic(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                                          @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                                          @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
+
+        Page<DeckResponse> comments = deckService.getAllPublicDeck(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
+        return ResponseEntity.ok(comments);
     }
 
     @PatchMapping("/{deckId}")
     public ResponseEntity<DeckResponse> update(@PathVariable UUID deckId,
                                                @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
-        System.out.println("update " + deckCreationUpdateRequest.toString());
-        DeckResponse updatedDeck = deckService.update(deckId, deckCreationUpdateRequest);
+        DeckResponse updatedDeck = deckService.updateDeck(deckId, deckCreationUpdateRequest);
         return ResponseEntity.ok(updatedDeck);
+    }
+
+    @PostMapping("/{deckId}/rating")
+    public ResponseEntity<DeckRating> rateDeck(@PathVariable UUID deckId,
+                                               @RequestBody DeckRatingCreationRequest rating,
+                                               @AuthenticationPrincipal DefaultUserDetails userDetails) {
+
+        DeckRating deckRating = deckRatingService.save(deckId, rating.getRating(), userDetails.getId());
+        return ResponseEntity.ok(deckRating);
     }
 }

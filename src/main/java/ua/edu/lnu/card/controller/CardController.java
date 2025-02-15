@@ -8,7 +8,6 @@ import ua.edu.lnu.card.dto.card.CardData;
 import ua.edu.lnu.card.entity.Card;
 import ua.edu.lnu.card.service.CardService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -17,10 +16,10 @@ import java.util.UUID;
 public class CardController {
     private final CardService cardService;
 
-    @GetMapping("/{deckId}")
-    public ResponseEntity<List<CardData>> getAllCardByDeckId(@PathVariable UUID deckId){
-        List<CardData> list =  cardService.getAllByDeckId(deckId);
-        return ResponseEntity.ok(list);
+    @GetMapping("/{cardId}")
+    public ResponseEntity<CardData> getAllCardByDeckId(@PathVariable UUID cardId){
+        CardData card = cardService.getCardById(cardId);
+        return ResponseEntity.ok(card);
     }
     @PostMapping
     public ResponseEntity<Card> create(@RequestBody CardCreationUpdateRequest cardCreationUpdateRequest) {

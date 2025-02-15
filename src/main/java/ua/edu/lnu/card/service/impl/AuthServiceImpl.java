@@ -11,7 +11,6 @@ import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.auth.Tokens;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.entity.User;
-import ua.edu.lnu.card.exception.exception.HttpError;
 import ua.edu.lnu.card.exception.exception.client.BadRequest;
 import ua.edu.lnu.card.mapper.UserMapper;
 import ua.edu.lnu.card.service.AuthService;
@@ -29,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Tokens register(UserCreationUpdateRequest userCreationUpdateRequest) {
-        User user = userService.create(userCreationUpdateRequest);
+        User user = userService.createUser(userCreationUpdateRequest);
         return jwtUtils.generateTokens(userMapper.toPayload(user));
     }
 

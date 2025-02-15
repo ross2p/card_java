@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1738510451847-1" author="rostyslavpasternak (generated)">
+        <createTable tableName="collaborator">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_collaborator"/>
+            </column>
+            <column name="deck_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deck_role_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1738510451847-2" author="rostyslavpasternak (generated)">
+        <createTable tableName="deck_rating">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_deck_rating"/>
+            </column>
+            <column name="deck_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="DOUBLE"/>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1738510451847-3" author="rostyslavpasternak (generated)">
+        <addColumn tableName="decks">
+            <column name="rating" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1738510451847-4" author="rostyslavpasternak (generated)">
+        <addUniqueConstraint columnNames="deck_id, user_id" constraintName="uc_46548c032111be4c6260816ed"
+                             tableName="deck_rating"/>
+    </changeSet>
+    <changeSet id="1738510451847-5" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="deck_id" baseTableName="collaborator"
+                                 constraintName="FK_COLLABORATOR_ON_DECK" referencedColumnNames="id"
+                                 referencedTableName="decks"/>
+    </changeSet>
+    <changeSet id="1738510451847-6" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="deck_role_id" baseTableName="collaborator"
+                                 constraintName="FK_COLLABORATOR_ON_DECK_ROLE" referencedColumnNames="id"
+                                 referencedTableName="deck_role"/>
+    </changeSet>
+    <changeSet id="1738510451847-7" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="collaborator"
+                                 constraintName="FK_COLLABORATOR_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1738510451847-8" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="deck_id" baseTableName="deck_rating"
+                                 constraintName="FK_DECK_RATING_ON_DECK" referencedColumnNames="id"
+                                 referencedTableName="decks"/>
+    </changeSet>
+    <changeSet id="1738510451847-9" author="rostyslavpasternak (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="deck_rating"
+                                 constraintName="FK_DECK_RATING_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1738510451847-10" author="rostyslavpasternak (generated)">
+        <dropForeignKeyConstraint baseTableName="deck_collaborator" constraintName="fk_deck_collaborator_on_deck"/>
+    </changeSet>
+    <changeSet id="1738510451847-11" author="rostyslavpasternak (generated)">
+        <dropForeignKeyConstraint baseTableName="deck_collaborator" constraintName="fk_deck_collaborator_on_user"/>
+    </changeSet>
+    <changeSet id="1738510451847-12" author="rostyslavpasternak (generated)">
+        <dropForeignKeyConstraint baseTableName="deck_ratings" constraintName="fk_deck_ratings_on_deck"/>
+    </changeSet>
+    <changeSet id="1738510451847-13" author="rostyslavpasternak (generated)">
+        <dropForeignKeyConstraint baseTableName="deck_ratings" constraintName="fk_deck_ratings_on_user"/>
+    </changeSet>
+    <changeSet id="1738510451847-14" author="rostyslavpasternak (generated)">
+        <dropTable cascadeConstraints="true" tableName="deck_collaborator"/>
+    </changeSet>
+    <changeSet id="1738510451847-15" author="rostyslavpasternak (generated)">
+        <dropTable cascadeConstraints="true" tableName="deck_ratings"/>
+    </changeSet>
+
+</databaseChangeLog>

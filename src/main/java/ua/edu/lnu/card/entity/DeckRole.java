@@ -16,7 +16,6 @@ public class DeckRole {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 

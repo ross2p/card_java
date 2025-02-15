@@ -8,12 +8,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
+import ua.edu.lnu.card.dto.deck.DeckResponseWithCards;
 import ua.edu.lnu.card.entity.Deck;
 import ua.edu.lnu.card.exception.exception.client.NotFound;
 import ua.edu.lnu.card.mapper.DeckMapper;
 import ua.edu.lnu.card.repository.DeckRepository;
 import ua.edu.lnu.card.service.DeckService;
-import ua.edu.lnu.card.utils.enums.AccessLevel;
 
 import java.util.UUID;
 
@@ -30,52 +30,47 @@ public class DeckServiceImpl implements DeckService {
 
     @Override
     public Page<DeckResponse> getDecksByUserId(UUID userId, PageRequest pageRequest) {
-
-        return deckRepository.findDecksByOwnerOrCollaboratorWithStatus(userId, AccessLevel.EDIT, pageRequest).map(deckMapper::toDto);
+        return null;
     }
 
     @Override
-    public Page<DeckResponse> getAllPublic(PageRequest pageRequest) {
+    public Page<DeckResponse> getAllPublicDeck(PageRequest pageRequest) {
         Deck exampleDeck = new Deck();
-        exampleDeck.setIsPrivate(false); // Вибираємо лише публічні деки
+        exampleDeck.setIsPrivate(false);
 
         Example<Deck> example = Example.of(exampleDeck, ExampleMatcher.matching()
                 .withIgnoreNullValues()
-                .withMatcher("isPrivate", ExampleMatcher.GenericPropertyMatchers.exact())); // Точний збіг для поля isPrivate
+                .withMatcher("isPrivate", ExampleMatcher.GenericPropertyMatchers.exact()));
 
         return deckRepository.findAll(example, pageRequest)
                 .map(deckMapper::toDto);
     }
 
     @Override
-    public DeckResponse create(UUID userId, DeckCreationUpdateRequest deckResponse) {
-        Deck deck = deckMapper.toEntity(deckResponse, userId);
+    public DeckResponse createDeck(UUID userId, DeckCreationUpdateRequest deckCreationUpdateRequest) {
+        Deck deck = deckMapper.toEntity(deckCreationUpdateRequest, userId);
         Deck savedDeck = deckRepository.save(deck);
         return deckMapper.toDto(savedDeck);
     }
 
     @Override
-    public Page<DeckResponse> getDecksByCollaborator(UUID userId, UUID collaboratorId, PageRequest pageRequest) {
-        return null;
-    }
-
-    @Override
-    public DeckResponse update(UUID deckId, DeckCreationUpdateRequest deckResponse) {
+    public DeckResponse updateDeck(UUID deckId, DeckCreationUpdateRequest deckCreationUpdateRequest) {
         Deck deck = getDeckById(deckId);
-
-        Deck updatedDeck = deckMapper.partialUpdate(deckResponse, deck);
+        Deck updatedDeck = deckMapper.partialUpdate(deckCreationUpdateRequest, deck);
         return deckMapper.toDto(deckRepository.save(updatedDeck));
     }
 
     @Override
-    public void delete(UUID deckId) {
+    public void deleteDeck(UUID deckId) {
 
     }
+
 
     @Override
-    public DeckResponse getById(UUID deckId) {
+    public DeckResponseWithCards getDeckDtoById(UUID deckId) {
         return deckRepository.findById(deckId)
-                .map(deckMapper::toDto)
+                .map(deckMapper::toDtoWithCards)
                 .orElseThrow(() -> new NotFound("Deck with id %s not found".formatted(deckId)));
     }
+
 }

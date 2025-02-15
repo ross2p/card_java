@@ -1,11 +1,11 @@
 package ua.edu.lnu.card.dto.user;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -14,13 +14,12 @@ import java.time.LocalDate;
  */
 @Value
 @Builder
-
 public class UserCreationUpdateRequest implements Serializable {
 
-    @NotBlank(message = "Refresh token is required")
+    @NotBlank(message = "First name is required")
     String firstName;
 
-    @NotBlank(message = "Refresh token is required")
+    @NotBlank(message = "Last name is required")
     String lastName;
 
     @Email

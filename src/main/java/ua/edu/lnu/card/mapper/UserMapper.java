@@ -9,17 +9,10 @@ import ua.edu.lnu.card.entity.User;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {RoleMapper.class, AuthComponent.class})
 public interface UserMapper {
-    User toEntity(UserResponse userResponse);
-
     UserResponse toDto(User user);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    User partialUpdate(UserResponse userResponse, @MappingTarget User user);
 
     @Mapping(target = "password", source = "password", qualifiedByName = "encodedPassword")
     User toEntity(UserCreationUpdateRequest userCreationUpdateRequest);
-
-    UserCreationUpdateRequest toDto1(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User partialUpdate(UserCreationUpdateRequest userCreationUpdateRequest, @MappingTarget User user);

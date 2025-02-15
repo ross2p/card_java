@@ -1,12 +1,11 @@
 package ua.edu.lnu.card.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dto.card.CardData;
 import ua.edu.lnu.card.entity.Card;
+import ua.edu.lnu.card.exception.exception.client.NotFound;
 import ua.edu.lnu.card.mapper.CardMapper;
 import ua.edu.lnu.card.repository.CardRepository;
 import ua.edu.lnu.card.service.CardService;
@@ -22,8 +21,10 @@ public class CardServiceImpl implements CardService {
     private final CardRepository cardRepository;
 
     @Override
-    public CardData readById(UUID cardId) {
-        return null;
+    public CardData getCardById(UUID cardId) {
+        return cardRepository.findById(cardId).map(cardMapper::toDto).orElseThrow(
+                () -> new NotFound("Card with id %s not found".formatted(cardId))
+        );
     }
 
     @Override
