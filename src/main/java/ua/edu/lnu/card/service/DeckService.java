@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.dto.deck.DeckResponseWithCards;
 
 import java.util.UUID;
 
@@ -21,6 +20,6 @@ public interface DeckService {
 
     void deleteDeck(UUID deckId);
 
-    DeckResponseWithCards getDeckDtoById(UUID deckId);
+    DeckResponse getDeckDtoById(UUID deckId);
 
 }

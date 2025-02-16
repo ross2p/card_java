@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.card.CardData;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
-import ua.edu.lnu.card.dto.deck.DeckRatingCreationRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.entity.DeckRating;
 import ua.edu.lnu.card.service.CardService;
-import ua.edu.lnu.card.service.DeckRatingService;
 import ua.edu.lnu.card.service.DeckService;
 
 import java.util.List;
@@ -26,7 +23,6 @@ import java.util.UUID;
 public class DeckController {
     private final DeckService deckService;
     private final CardService cardService;
-    private final DeckRatingService deckRatingService;
 
     @PostMapping
     public ResponseEntity<DeckResponse> create(@RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest,
@@ -62,14 +58,5 @@ public class DeckController {
                                                @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
         DeckResponse updatedDeck = deckService.updateDeck(deckId, deckCreationUpdateRequest);
         return ResponseEntity.ok(updatedDeck);
-    }
-
-    @PostMapping("/{deckId}/rating")
-    public ResponseEntity<DeckRating> rateDeck(@PathVariable UUID deckId,
-                                               @RequestBody DeckRatingCreationRequest rating,
-                                               @AuthenticationPrincipal DefaultUserDetails userDetails) {
-
-        DeckRating deckRating = deckRatingService.save(deckId, rating.getRating(), userDetails.getId());
-        return ResponseEntity.ok(deckRating);
     }
 }

@@ -3,7 +3,6 @@ package ua.edu.lnu.card.mapper;
 import org.mapstruct.*;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.dto.deck.DeckResponseWithCards;
 import ua.edu.lnu.card.entity.Deck;
 
 import java.util.UUID;
@@ -18,5 +17,4 @@ public interface DeckMapper {
 
     DeckResponse toDto(Deck deck);
 
-    DeckResponseWithCards toDtoWithCards(Deck deck);
 }

@@ -6,13 +6,16 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.dto.deck.DeckResponseWithCards;
+import ua.edu.lnu.card.entity.Collaborator;
 import ua.edu.lnu.card.entity.Deck;
 import ua.edu.lnu.card.exception.exception.client.NotFound;
 import ua.edu.lnu.card.mapper.DeckMapper;
 import ua.edu.lnu.card.repository.DeckRepository;
+import ua.edu.lnu.card.service.CollaboratorService;
+import ua.edu.lnu.card.service.DeckRoleService;
 import ua.edu.lnu.card.service.DeckService;
 
 import java.util.UUID;
@@ -22,6 +25,9 @@ import java.util.UUID;
 public class DeckServiceImpl implements DeckService {
     private final DeckRepository deckRepository;
     private final DeckMapper deckMapper;
+
+    private final DeckRoleService deckRoleService;
+    private final CollaboratorService collaboratorService;
 
     private Deck getDeckById(UUID deckId) {
         return deckRepository.findById(deckId)
@@ -49,7 +55,16 @@ public class DeckServiceImpl implements DeckService {
     @Override
     public DeckResponse createDeck(UUID userId, DeckCreationUpdateRequest deckCreationUpdateRequest) {
         Deck deck = deckMapper.toEntity(deckCreationUpdateRequest, userId);
+        System.out.println("start DeckServiceImpl.createDeck");
         Deck savedDeck = deckRepository.save(deck);
+        System.out.println("DeckServiceImpl.createDeck");
+
+        System.out.println("DeckServiceImpl.createDeck: " + deckMapper.toDto(getDeckById(savedDeck.getId())));
+
+        deckRoleService.createDefaultDeckRole(savedDeck.getId());
+        System.out.println("DeckRoleService.createDefaultDeckRole");
+        collaboratorService.createOwnerCollaborator(savedDeck.getId(), userId);
+
         return deckMapper.toDto(savedDeck);
     }
 
@@ -65,11 +80,10 @@ public class DeckServiceImpl implements DeckService {
 
     }
 
-
     @Override
-    public DeckResponseWithCards getDeckDtoById(UUID deckId) {
+    public DeckResponse getDeckDtoById(UUID deckId) {
         return deckRepository.findById(deckId)
-                .map(deckMapper::toDtoWithCards)
+                .map(deckMapper::toDto)
                 .orElseThrow(() -> new NotFound("Deck with id %s not found".formatted(deckId)));
     }
 
