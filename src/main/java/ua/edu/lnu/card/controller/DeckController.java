@@ -11,7 +11,12 @@ import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.card.CardData;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
+import ua.edu.lnu.card.entity.Collaborator;
+import ua.edu.lnu.card.entity.Deck;
+import ua.edu.lnu.card.entity.DeckRole;
 import ua.edu.lnu.card.service.CardService;
+import ua.edu.lnu.card.service.CollaboratorService;
+import ua.edu.lnu.card.service.DeckRoleService;
 import ua.edu.lnu.card.service.DeckService;
 
 import java.util.List;
@@ -23,12 +28,14 @@ import java.util.UUID;
 public class DeckController {
     private final DeckService deckService;
     private final CardService cardService;
+    private final DeckRoleService deckRoleService;
+    private final CollaboratorService collaboratorService;
 
     @PostMapping
-    public ResponseEntity<DeckResponse> create(@RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest,
-                                               @AuthenticationPrincipal DefaultUserDetails userDetails) {
+    public ResponseEntity<Deck> create(@RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest,
+                                       @AuthenticationPrincipal DefaultUserDetails userDetails) {
         UUID userId = userDetails.getId();
-        DeckResponse newDeck = deckService.createDeck(userId, deckCreationUpdateRequest);
+        Deck newDeck = deckService.createDeck(userId, deckCreationUpdateRequest);
         return ResponseEntity.ok(newDeck);
     }
 
@@ -44,6 +51,18 @@ public class DeckController {
         return ResponseEntity.ok(card);
     }
 
+    @GetMapping("{deckId}/deck-roles")
+    public ResponseEntity<List<DeckRole>> getDeckRolesByDeckId(@PathVariable UUID deckId) {
+        List<DeckRole> deckRoles = deckRoleService.getDeckRolesByDeckId(deckId);
+        return ResponseEntity.ok(deckRoles);
+    }
+
+    @GetMapping("/{deckId}/collaborators")
+    public ResponseEntity<List<Collaborator>> getCollaboratorsByDeckId(@PathVariable UUID deckId) {
+        List<Collaborator> collaborators = collaboratorService.getCollaboratorsByDeckId(deckId);
+        return ResponseEntity.ok(collaborators);
+    }
+
     @GetMapping
     public ResponseEntity<Page<DeckResponse>> getAllPublic(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                           @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
@@ -54,9 +73,9 @@ public class DeckController {
     }
 
     @PatchMapping("/{deckId}")
-    public ResponseEntity<DeckResponse> update(@PathVariable UUID deckId,
+    public ResponseEntity<Deck> update(@PathVariable UUID deckId,
                                                @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
-        DeckResponse updatedDeck = deckService.updateDeck(deckId, deckCreationUpdateRequest);
+        Deck updatedDeck = deckService.updateDeck(deckId, deckCreationUpdateRequest);
         return ResponseEntity.ok(updatedDeck);
     }
 }

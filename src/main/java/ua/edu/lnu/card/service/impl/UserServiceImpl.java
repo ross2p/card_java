@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(UUID userId, UserCreationUpdateRequest userCreationUpdateRequest) {
+    public User updateUser(UUID userId, UserCreationUpdateRequest userCreationUpdateRequest) {
         User user = this.getUserById(userId);
         user = userMapper.partialUpdate(userCreationUpdateRequest, user);
-        return userMapper.toDto(userRepository.save(user));
+        return userRepository.save(user);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserResponse> getAllPopularUsers(PageRequest of) {
-        return userRepository.findAll(of).map(userMapper::toDto);
+    public Page<User> getAllPopularUsers(PageRequest of) {
+        return userRepository.findAll(of);
     }
 }

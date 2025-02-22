@@ -7,7 +7,7 @@ import ua.edu.lnu.card.entity.DeckRating;
 import java.util.UUID;
 
 public interface DeckRatingService {
-    DeckRatingResponse save(DeckRatingCreationRequest deckRatingCreationRequest, UUID userId);
+    DeckRatingResponse  save(DeckRatingCreationRequest deckRatingCreationRequest, UUID userId);
 
     DeckRatingResponse getDeckRatingById(UUID id);
 }

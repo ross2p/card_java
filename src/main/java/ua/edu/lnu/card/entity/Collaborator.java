@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,7 +17,9 @@ import java.util.UUID;
 @Table(name = "collaborator")
 public class Collaborator {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
+    @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 
     @ManyToOne

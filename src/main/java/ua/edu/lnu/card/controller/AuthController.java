@@ -2,17 +2,16 @@ package ua.edu.lnu.card.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.dto.auth.Token;
 import ua.edu.lnu.card.dto.auth.Tokens;
 import ua.edu.lnu.card.dto.auth.LoginAuthentication;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
+import ua.edu.lnu.card.entity.User;
 import ua.edu.lnu.card.exception.exception.HttpError;
 import ua.edu.lnu.card.exception.exception.client.BadRequest;
 import ua.edu.lnu.card.service.AuthService;
+import ua.edu.lnu.card.service.UserService;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,6 +19,9 @@ import ua.edu.lnu.card.service.AuthService;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
+
+
     @PostMapping("/register")
     public ResponseEntity<Tokens> register(@RequestBody UserCreationUpdateRequest userCreationRequest) {
         Tokens tokens = authService.register(userCreationRequest);

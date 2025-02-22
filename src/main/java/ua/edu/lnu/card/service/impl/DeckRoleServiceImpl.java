@@ -1,5 +1,6 @@
 package ua.edu.lnu.card.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.deckRole.DeckRoleCreationUpdateRequest;
@@ -25,16 +26,15 @@ public class DeckRoleServiceImpl implements DeckRoleService {
 
         return defaultDeckRoleList.stream().map(deckRoleCreationUpdateRequest -> {
             deckRoleCreationUpdateRequest.setDeckId(deckId);
+            System.out.println("DeckRoleServiceImpl.createDefaultDeckRole: " + deckRoleCreationUpdateRequest);
             return this.createDeckRole(deckRoleCreationUpdateRequest);
         }).toList();
     }
 
     @Override
     public DeckRole createDeckRole(DeckRoleCreationUpdateRequest deckRoleCreationUpdateRequest) {
-        System.out.println("DeckRoleServiceImpl.createDeckRole: " + deckRoleCreationUpdateRequest.getName());
         System.out.println("DeckRoleServiceImpl.createDeckRole: " + deckRoleCreationUpdateRequest);
-        System.out.println("DeckRoleServiceImpl.createDeckRole: " + deckRoleMapper.toEntity(deckRoleCreationUpdateRequest));
-        return deckRoleRepository.save(deckRoleMapper.toEntity(deckRoleCreationUpdateRequest));
+        return deckRoleRepository.saveAndFlush(deckRoleMapper.toEntity(deckRoleCreationUpdateRequest));
     }
 
     @Override
@@ -53,7 +53,6 @@ public class DeckRoleServiceImpl implements DeckRoleService {
     @Override
     public void deleteDeckRole(UUID deckRoleId) {
         throw new InternalServerError("DeckRoleService >> deleteDeckRole >>  Not implemented yet");
-
     }
 
     @Override

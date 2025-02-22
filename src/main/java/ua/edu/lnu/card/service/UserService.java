@@ -15,9 +15,9 @@ public interface UserService {
 
     User createUser(UserCreationUpdateRequest userCreationRequest);
 
-    UserResponse updateUser(UUID id, UserCreationUpdateRequest userCreationUpdateRequest);
+    User updateUser(UUID id, UserCreationUpdateRequest userCreationUpdateRequest);
 
     void deleteUser(UUID id);
 
-    Page<UserResponse> getAllPopularUsers(PageRequest of);
+    Page<User> getAllPopularUsers(PageRequest of);
 }

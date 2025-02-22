@@ -13,7 +13,6 @@ public class HttpResponse extends RuntimeException {
     private final String message;
     private final String name;
 
-
     public HttpResponse(Integer status, String message, String name) {
         this.status = status;
         this.message = message;
