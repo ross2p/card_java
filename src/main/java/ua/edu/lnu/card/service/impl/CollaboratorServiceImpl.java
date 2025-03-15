@@ -31,7 +31,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     @Override
     public Collaborator createCollaborator(CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
-        return collaboratorRepository.saveAndFlush(collaboratorMapper.toEntity(collaboratorCreationUpdateRequest));
+        System.out.println("CollaboratorServiceImpl >> createCollaborator >> collaboratorCreationUpdateRequest: " + collaboratorMapper.toEntity(collaboratorCreationUpdateRequest));
+        return collaboratorRepository.save(collaboratorMapper.toEntity(collaboratorCreationUpdateRequest));
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public interface CardService {
+public interface  CardService {
     CardData getCardById(UUID cardId);
     List<CardData> getAllByDeckId(UUID deckId);
 

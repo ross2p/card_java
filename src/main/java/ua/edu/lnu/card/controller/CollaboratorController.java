@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.edu.lnu.card.dto.collaborator.CollaboratorCreationUpdateRequest;
 import ua.edu.lnu.card.entity.Collaborator;
@@ -17,7 +18,8 @@ public class CollaboratorController {
     private final CollaboratorService collaboratorService;
 
     @PostMapping
-    public ResponseEntity<Collaborator> createCollaborator(CollaboratorCreationUpdateRequest newCollaboratorRequest) {
+    public ResponseEntity<Collaborator> createCollaborator(@RequestBody CollaboratorCreationUpdateRequest newCollaboratorRequest) {
+        System.out.println("CollaboratorController.createCollaborator"+ newCollaboratorRequest);
         Collaborator collaborator = collaboratorService.createCollaborator(newCollaboratorRequest);
         return ResponseEntity.ok(collaborator);
     }

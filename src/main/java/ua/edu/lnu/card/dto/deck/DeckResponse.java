@@ -1,6 +1,7 @@
 package ua.edu.lnu.card.dto.deck;
 
 import lombok.Data;
+import ua.edu.lnu.card.dto.collaborator.CollaboratorResponse;
 import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.entity.Collaborator;
 
@@ -23,6 +24,5 @@ public class DeckResponse implements Serializable {
     Date updatedAt;
     Integer cardsCount;
     Double rating;
-    Set<Collaborator> collaborators;
-
+    Set<CollaboratorResponse> collaborators;
 }

@@ -3,6 +3,7 @@ package ua.edu.lnu.card.mapper;
 import org.mapstruct.*;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
+import ua.edu.lnu.card.dto.deck.DescriptionDeck;
 import ua.edu.lnu.card.entity.Deck;
 
 import java.util.UUID;
@@ -17,4 +18,10 @@ public interface DeckMapper {
 
     DeckResponse toDto(Deck deck);
 
+    Deck toEntity(DescriptionDeck descriptionDeck);
+
+    DescriptionDeck toDto1(Deck deck);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Deck partialUpdate(DescriptionDeck descriptionDeck, @MappingTarget Deck deck);
 }

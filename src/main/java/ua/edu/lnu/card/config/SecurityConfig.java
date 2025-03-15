@@ -38,6 +38,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .requestMatchers("/**").authenticated()
                         .anyRequest().permitAll());
 

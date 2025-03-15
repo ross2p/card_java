@@ -47,10 +47,10 @@ public class Deck {
 //    private Set<DeckRating> deckRatings = new LinkedHashSet<>();
 
 
-//    @OneToMany(mappedBy = "deck", orphanRemoval = true)
-//    private Set<Collaborator> collaborators = new LinkedHashSet<>();
-//
-//
+    @OneToMany(mappedBy = "deck", orphanRemoval = true)
+    private Set<Collaborator> collaborators = new LinkedHashSet<>();
+
+
 //    @OneToMany(mappedBy = "deck", orphanRemoval = true)
 //    private Set<DeckRole> deckRoles = new LinkedHashSet<>();
 

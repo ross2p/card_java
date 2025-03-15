@@ -18,4 +18,9 @@ public interface UserMapper {
     User partialUpdate(UserCreationUpdateRequest userCreationUpdateRequest, @MappingTarget User user);
 
     DefaultUserDetails toPayload(User user);
+
+    User toEntity(UserResponse userResponse);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    User partialUpdate(UserResponse userResponse, @MappingTarget User user);
 }

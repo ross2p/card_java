@@ -1,6 +1,5 @@
 package ua.edu.lnu.card.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -86,6 +85,7 @@ public class DeckServiceImpl implements DeckService {
 
     @Override
     public DeckResponse getDeckDtoById(UUID deckId) {
+        System.out.println("DeckServiceImpl.getDeckDtoById" + getDeckById(deckId).getCollaborators().size());
         return deckMapper.toDto(getDeckById(deckId));
     }
 

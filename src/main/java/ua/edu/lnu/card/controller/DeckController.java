@@ -74,7 +74,7 @@ public class DeckController {
 
     @PatchMapping("/{deckId}")
     public ResponseEntity<Deck> update(@PathVariable UUID deckId,
-                                               @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
+                                       @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
         Deck updatedDeck = deckService.updateDeck(deckId, deckCreationUpdateRequest);
         return ResponseEntity.ok(updatedDeck);
     }

@@ -12,7 +12,7 @@ import ua.edu.lnu.card.mapper.UserMapper;
 import ua.edu.lnu.card.repository.RoleRepository;
 import ua.edu.lnu.card.repository.UserRepository;
 import ua.edu.lnu.card.service.UserService;
-import ua.edu.lnu.card.utils.Constant;
+import ua.edu.lnu.card.utils.Constants;
 
 import java.util.UUID;
 
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(UserCreationUpdateRequest userCreationRequest) {
         User newUser = userMapper.toEntity(userCreationRequest);
         if (newUser.getRole() == null) {
-            newUser.setRole(roleRepository.findByName(Constant.DEFAULT_ROLE));
+            newUser.setRole(roleRepository.findByName(Constants.DEFAULT_ROLE));
         }
         return userRepository.save(newUser);
     }
