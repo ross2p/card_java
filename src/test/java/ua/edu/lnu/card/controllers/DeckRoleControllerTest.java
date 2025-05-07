@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import ua.edu.lnu.card.controllers.DeckRoleController;
 import ua.edu.lnu.card.dtos.deckRole.DeckRoleCreationUpdateRequest;
 import ua.edu.lnu.card.entities.DeckRole;
 import ua.edu.lnu.card.services.DeckRoleService;
