@@ -14,10 +14,10 @@ import ua.edu.lnu.card.dtos.deck.DeckResponse;
 import ua.edu.lnu.card.entities.Collaborator;
 import ua.edu.lnu.card.entities.Deck;
 import ua.edu.lnu.card.entities.DeckRole;
-import ua.edu.lnu.card.service.CardService;
-import ua.edu.lnu.card.service.CollaboratorService;
-import ua.edu.lnu.card.service.DeckRoleService;
-import ua.edu.lnu.card.service.DeckService;
+import ua.edu.lnu.card.services.CardService;
+import ua.edu.lnu.card.services.CollaboratorService;
+import ua.edu.lnu.card.services.DeckRoleService;
+import ua.edu.lnu.card.services.DeckService;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +33,7 @@ public class DeckController {
 
     @PostMapping
     public ResponseEntity<Deck> create(@RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest,
-                                       @AuthenticationPrincipal DefaultUserDetails userDetails) {
+            @AuthenticationPrincipal DefaultUserDetails userDetails) {
         UUID userId = userDetails.getId();
         Deck newDeck = deckService.createDeck(userId, deckCreationUpdateRequest);
         return ResponseEntity.ok(newDeck);
@@ -64,9 +64,10 @@ public class DeckController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DeckResponse>> getAllPublic(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                                          @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                                                          @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
+    public ResponseEntity<Page<DeckResponse>> getAllPublic(
+            @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
         System.out.println("asdfghjklwertyui2345678--------------------------------------------");
 
         Page<DeckResponse> comments = deckService.getAllPublicDeck(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
@@ -75,7 +76,7 @@ public class DeckController {
 
     @PatchMapping("/{deckId}")
     public ResponseEntity<Deck> update(@PathVariable UUID deckId,
-                                       @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
+            @RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest) {
         Deck updatedDeck = deckService.updateDeck(deckId, deckCreationUpdateRequest);
         return ResponseEntity.ok(updatedDeck);
     }

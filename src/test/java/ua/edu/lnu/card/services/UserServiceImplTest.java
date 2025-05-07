@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,11 +9,11 @@ import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.user.UserResponse;
 import ua.edu.lnu.card.entities.Role;
 import ua.edu.lnu.card.entities.User;
-import ua.edu.lnu.card.exception.exception.client.NotFound;
+import ua.edu.lnu.card.exceptions.exception.client.NotFound;
 import ua.edu.lnu.card.mappers.UserMapper;
-import ua.edu.lnu.card.repository.RoleRepository;
-import ua.edu.lnu.card.repository.UserRepository;
-import ua.edu.lnu.card.service.impl.UserServiceImpl;
+import ua.edu.lnu.card.repositories.RoleRepository;
+import ua.edu.lnu.card.repositories.UserRepository;
+import ua.edu.lnu.card.services.impl.UserServiceImpl;
 
 import java.util.*;
 

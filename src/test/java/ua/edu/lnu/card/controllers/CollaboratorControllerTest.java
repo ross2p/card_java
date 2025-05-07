@@ -7,9 +7,11 @@ import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import ua.edu.lnu.card.controller.CollaboratorController;
 import ua.edu.lnu.card.dtos.collaborator.CollaboratorCreationUpdateRequest;
 import ua.edu.lnu.card.entities.Collaborator;
-import ua.edu.lnu.card.service.CollaboratorService;
+import ua.edu.lnu.card.services.CollaboratorService;
 
 import java.util.List;
 import java.util.UUID;

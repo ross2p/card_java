@@ -1,14 +1,14 @@
-package ua.edu.lnu.card.service.impl;
+package ua.edu.lnu.card.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dtos.deck.DeckRatingCreationRequest;
 import ua.edu.lnu.card.dtos.deck.DeckRatingResponse;
 import ua.edu.lnu.card.entities.DeckRating;
+import ua.edu.lnu.card.exceptions.exception.client.NotFound;
 import ua.edu.lnu.card.mappers.DeckRatingMapper;
-import ua.edu.lnu.card.repository.DeckRatingRepository;
-import ua.edu.lnu.card.service.DeckRatingService;
-import ua.edu.lnu.card.exception.exception.client.NotFound;
+import ua.edu.lnu.card.repositories.DeckRatingRepository;
+import ua.edu.lnu.card.services.DeckRatingService;
 
 import java.util.UUID;
 

@@ -7,9 +7,11 @@ import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import ua.edu.lnu.card.controller.AiController;
 import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.deck.DescriptionDeck;
-import ua.edu.lnu.card.service.AIService;
+import ua.edu.lnu.card.services.AIService;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

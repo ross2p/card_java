@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,10 +8,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ua.edu.lnu.card.dtos.deck.DeckRatingCreationRequest;
 import ua.edu.lnu.card.dtos.deck.DeckRatingResponse;
 import ua.edu.lnu.card.entities.DeckRating;
-import ua.edu.lnu.card.exception.exception.client.NotFound;
+import ua.edu.lnu.card.exceptions.exception.client.NotFound;
 import ua.edu.lnu.card.mappers.DeckRatingMapper;
-import ua.edu.lnu.card.repository.DeckRatingRepository;
-import ua.edu.lnu.card.service.impl.DeckRatingServiceImpl;
+import ua.edu.lnu.card.repositories.DeckRatingRepository;
+import ua.edu.lnu.card.services.impl.DeckRatingServiceImpl;
 
 import java.util.Optional;
 import java.util.UUID;

@@ -7,10 +7,13 @@ import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import ua.edu.lnu.card.controller.UserController;
 import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.entities.User;
-import ua.edu.lnu.card.service.UserService;
+import ua.edu.lnu.card.services.UserService;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

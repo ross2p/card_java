@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
-import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
-import ua.edu.lnu.card.entity.User;
+import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
+import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
+import ua.edu.lnu.card.entities.User;
 import ua.edu.lnu.card.services.UserService;
 
 import java.util.UUID;

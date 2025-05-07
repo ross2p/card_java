@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import ua.edu.lnu.card.controller.DeckController;
 import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.card.CardData;
 import ua.edu.lnu.card.dtos.deck.DeckCreationUpdateRequest;
@@ -17,10 +19,11 @@ import ua.edu.lnu.card.dtos.deck.DeckResponse;
 import ua.edu.lnu.card.entities.Collaborator;
 import ua.edu.lnu.card.entities.Deck;
 import ua.edu.lnu.card.entities.DeckRole;
-import ua.edu.lnu.card.service.CardService;
-import ua.edu.lnu.card.service.CollaboratorService;
-import ua.edu.lnu.card.service.DeckRoleService;
-import ua.edu.lnu.card.service.DeckService;
+import ua.edu.lnu.card.services.CardService;
+import ua.edu.lnu.card.services.CollaboratorService;
+import ua.edu.lnu.card.services.DeckRoleService;
+import ua.edu.lnu.card.services.DeckService;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

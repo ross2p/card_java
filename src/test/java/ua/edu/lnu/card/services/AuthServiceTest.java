@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,9 +11,9 @@ import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.auth.Tokens;
 import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.entities.User;
-import ua.edu.lnu.card.exception.exception.client.BadRequest;
+import ua.edu.lnu.card.exceptions.exception.client.BadRequest;
 import ua.edu.lnu.card.mappers.UserMapper;
-import ua.edu.lnu.card.service.impl.AuthServiceImpl;
+import ua.edu.lnu.card.services.impl.AuthServiceImpl;
 import ua.edu.lnu.card.utils.JwtUtils;
 
 import static org.assertj.core.api.Assertions.*;

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.auth.Tokens;
 import ua.edu.lnu.card.dtos.role.RoleResponse;
-import ua.edu.lnu.card.exception.exception.client.BadRequest;
-import ua.edu.lnu.card.exception.exception.client.Forbidden;
-import ua.edu.lnu.card.exception.exception.client.Unauthorized;
+import ua.edu.lnu.card.exceptions.exception.client.BadRequest;
+import ua.edu.lnu.card.exceptions.exception.client.Forbidden;
+import ua.edu.lnu.card.exceptions.exception.client.Unauthorized;
 import io.jsonwebtoken.security.SignatureException;
 
 import java.time.Duration;

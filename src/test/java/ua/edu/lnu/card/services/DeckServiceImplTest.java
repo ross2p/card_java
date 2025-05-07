@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,10 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import ua.edu.lnu.card.dtos.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.deck.DeckResponse;
 import ua.edu.lnu.card.entities.Deck;
-import ua.edu.lnu.card.exception.exception.server.NotImplemented;
+import ua.edu.lnu.card.exceptions.exception.server.NotImplemented;
 import ua.edu.lnu.card.mappers.DeckMapper;
-import ua.edu.lnu.card.repository.DeckRepository;
-import ua.edu.lnu.card.service.impl.DeckServiceImpl;
+import ua.edu.lnu.card.repositories.DeckRepository;
+import ua.edu.lnu.card.services.impl.DeckServiceImpl;
 
 import java.util.Optional;
 import java.util.UUID;

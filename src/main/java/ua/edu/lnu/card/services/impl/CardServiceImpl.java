@@ -1,14 +1,14 @@
-package ua.edu.lnu.card.service.impl;
+package ua.edu.lnu.card.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.card.CardData;
 import ua.edu.lnu.card.entities.Card;
-import ua.edu.lnu.card.exception.exception.client.NotFound;
+import ua.edu.lnu.card.exceptions.exception.client.NotFound;
 import ua.edu.lnu.card.mappers.CardMapper;
-import ua.edu.lnu.card.repository.CardRepository;
-import ua.edu.lnu.card.service.CardService;
+import ua.edu.lnu.card.repositories.CardRepository;
+import ua.edu.lnu.card.services.CardService;
 
 import java.util.List;
 import java.util.UUID;

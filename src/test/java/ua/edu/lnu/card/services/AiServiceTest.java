@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.card.CardData;
 import ua.edu.lnu.card.dtos.deck.DeckResponse;
 import ua.edu.lnu.card.dtos.deck.DescriptionDeck;
-import ua.edu.lnu.card.service.impl.AIServiceImpl;
+import ua.edu.lnu.card.services.impl.AIServiceImpl;
 
 import java.util.List;
 import java.util.UUID;

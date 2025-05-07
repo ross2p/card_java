@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.card.CardData;
 import ua.edu.lnu.card.entities.Card;
-import ua.edu.lnu.card.service.CardService;
+import ua.edu.lnu.card.services.CardService;
 
 import java.util.UUID;
 

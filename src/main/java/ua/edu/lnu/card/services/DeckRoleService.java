@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import ua.edu.lnu.card.dtos.deckRole.DeckRoleCreationUpdateRequest;
 import ua.edu.lnu.card.entities.DeckRole;

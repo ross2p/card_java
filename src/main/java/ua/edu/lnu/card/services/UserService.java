@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

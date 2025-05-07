@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service.impl;
+package ua.edu.lnu.card.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,10 +11,10 @@ import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.auth.Tokens;
 import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.entities.User;
-import ua.edu.lnu.card.exception.exception.client.BadRequest;
+import ua.edu.lnu.card.exceptions.exception.client.BadRequest;
 import ua.edu.lnu.card.mappers.UserMapper;
-import ua.edu.lnu.card.service.AuthService;
-import ua.edu.lnu.card.service.UserService;
+import ua.edu.lnu.card.services.AuthService;
+import ua.edu.lnu.card.services.UserService;
 import ua.edu.lnu.card.utils.JwtUtils;
 
 @Service
@@ -34,8 +34,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Tokens login(String email, String password) throws BadRequest {
-        UsernamePasswordAuthenticationToken authenticationToken
-                = new UsernamePasswordAuthenticationToken(email, password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email,
+                password);
         try {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             DefaultUserDetails userDetails = (DefaultUserDetails) authentication.getPrincipal();
@@ -61,8 +61,5 @@ public class AuthServiceImpl implements AuthService {
 
         return new Tokens(accessToken, refreshToken);
     }
-
-
-
 
 }

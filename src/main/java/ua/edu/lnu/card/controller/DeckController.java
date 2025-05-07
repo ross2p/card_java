@@ -7,13 +7,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
-import ua.edu.lnu.card.dto.card.CardData;
-import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
-import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.entity.Collaborator;
-import ua.edu.lnu.card.entity.Deck;
-import ua.edu.lnu.card.entity.DeckRole;
+import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
+import ua.edu.lnu.card.dtos.card.CardData;
+import ua.edu.lnu.card.dtos.deck.DeckCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.deck.DeckResponse;
+import ua.edu.lnu.card.entities.Collaborator;
+import ua.edu.lnu.card.entities.Deck;
+import ua.edu.lnu.card.entities.DeckRole;
 import ua.edu.lnu.card.services.CardService;
 import ua.edu.lnu.card.services.CollaboratorService;
 import ua.edu.lnu.card.services.DeckRoleService;
@@ -33,7 +33,7 @@ public class DeckController {
 
     @PostMapping
     public ResponseEntity<Deck> create(@RequestBody DeckCreationUpdateRequest deckCreationUpdateRequest,
-                                       @AuthenticationPrincipal DefaultUserDetails userDetails) {
+            @AuthenticationPrincipal DefaultUserDetails userDetails) {
         UUID userId = userDetails.getId();
         Deck newDeck = deckService.createDeck(userId, deckCreationUpdateRequest);
         return ResponseEntity.ok(newDeck);
@@ -64,11 +64,10 @@ public class DeckController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DeckResponse>> getAllPublic(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                                          @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                                                          @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
-        System.out.println("asdfghjklwertyui2345678--------------------------------------------");
-
+    public ResponseEntity<Page<DeckResponse>> getAllPublic(
+            @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
         Page<DeckResponse> comments = deckService.getAllPublicDeck(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
         return ResponseEntity.ok(comments);
     }

@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,7 +7,6 @@ import ua.edu.lnu.card.dtos.deck.DeckResponse;
 import ua.edu.lnu.card.entities.Deck;
 
 import java.util.UUID;
-
 
 public interface DeckService {
 

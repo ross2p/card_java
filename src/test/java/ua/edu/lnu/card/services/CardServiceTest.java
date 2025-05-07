@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,10 +8,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.card.CardData;
 import ua.edu.lnu.card.entities.Card;
-import ua.edu.lnu.card.exception.exception.client.NotFound;
+import ua.edu.lnu.card.exceptions.exception.client.NotFound;
 import ua.edu.lnu.card.mappers.CardMapper;
-import ua.edu.lnu.card.repository.CardRepository;
-import ua.edu.lnu.card.service.impl.CardServiceImpl;
+import ua.edu.lnu.card.repositories.CardRepository;
+import ua.edu.lnu.card.services.CardService;
+import ua.edu.lnu.card.services.impl.CardServiceImpl;
 
 import java.util.Date;
 import java.util.List;

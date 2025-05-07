@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,8 +8,8 @@ import ua.edu.lnu.card.dtos.role.RoleResponse;
 import ua.edu.lnu.card.entities.Role;
 import ua.edu.lnu.card.entities.User;
 import ua.edu.lnu.card.mappers.RoleMapper;
-import ua.edu.lnu.card.repository.UserRepository;
-import ua.edu.lnu.card.service.impl.DefaultUserDetailsService;
+import ua.edu.lnu.card.repositories.UserRepository;
+import ua.edu.lnu.card.services.impl.DefaultUserDetailsService;
 
 import java.util.Optional;
 import java.util.UUID;

@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.deck.DescriptionDeck;
-import ua.edu.lnu.card.service.AIService;
-
+import ua.edu.lnu.card.services.AIService;
 
 @RestController
 @RequestMapping("/ai")
@@ -18,7 +17,8 @@ public class AiController {
     private final AIService aiService;
 
     @PostMapping("/generate-card")
-    public ResponseEntity<CardCreationUpdateRequest> generateOneCard(@RequestBody CardCreationUpdateRequest cardCreationUpdateRequest) throws Exception {
+    public ResponseEntity<CardCreationUpdateRequest> generateOneCard(
+            @RequestBody CardCreationUpdateRequest cardCreationUpdateRequest) throws Exception {
         return ResponseEntity.ok(aiService.generateOneCard(cardCreationUpdateRequest));
     }
 

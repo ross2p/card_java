@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.entities.User;
-import ua.edu.lnu.card.service.UserService;
+import ua.edu.lnu.card.services.UserService;
 
 import java.util.UUID;
 

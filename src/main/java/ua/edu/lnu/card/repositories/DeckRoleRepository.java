@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.repository;
+package ua.edu.lnu.card.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.edu.lnu.card.entities.DeckRole;

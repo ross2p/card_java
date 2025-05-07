@@ -7,9 +7,11 @@ import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import ua.edu.lnu.card.controller.DeckRoleController;
 import ua.edu.lnu.card.dtos.deckRole.DeckRoleCreationUpdateRequest;
 import ua.edu.lnu.card.entities.DeckRole;
-import ua.edu.lnu.card.service.DeckRoleService;
+import ua.edu.lnu.card.services.DeckRoleService;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

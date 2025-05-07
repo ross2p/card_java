@@ -1,13 +1,13 @@
-package ua.edu.lnu.card.service.impl;
+package ua.edu.lnu.card.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dtos.deckRole.DeckRoleCreationUpdateRequest;
 import ua.edu.lnu.card.entities.DeckRole;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
+import ua.edu.lnu.card.exceptions.exception.server.InternalServerError;
 import ua.edu.lnu.card.mappers.DeckRoleMapper;
-import ua.edu.lnu.card.repository.DeckRoleRepository;
-import ua.edu.lnu.card.service.DeckRoleService;
+import ua.edu.lnu.card.repositories.DeckRoleRepository;
+import ua.edu.lnu.card.services.DeckRoleService;
 import ua.edu.lnu.card.utils.DefaultDeckRoles;
 
 import java.util.List;

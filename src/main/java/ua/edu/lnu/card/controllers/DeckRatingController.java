@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.deck.DeckRatingCreationRequest;
 import ua.edu.lnu.card.dtos.deck.DeckRatingResponse;
-import ua.edu.lnu.card.service.DeckRatingService;
+import ua.edu.lnu.card.services.DeckRatingService;
 
 import java.util.UUID;
 

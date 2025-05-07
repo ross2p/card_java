@@ -7,9 +7,9 @@ import ua.edu.lnu.card.dtos.auth.Token;
 import ua.edu.lnu.card.dtos.auth.Tokens;
 import ua.edu.lnu.card.dtos.auth.LoginAuthentication;
 import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.client.BadRequest;
-import ua.edu.lnu.card.service.AuthService;
+import ua.edu.lnu.card.exceptions.exception.HttpError;
+import ua.edu.lnu.card.exceptions.exception.client.BadRequest;
+import ua.edu.lnu.card.services.AuthService;
 
 @RestController
 @RequestMapping("/auth")

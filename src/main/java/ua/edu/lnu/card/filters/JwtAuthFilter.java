@@ -16,9 +16,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.client.BadRequest;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
+import ua.edu.lnu.card.exceptions.exception.HttpError;
+import ua.edu.lnu.card.exceptions.exception.client.BadRequest;
+import ua.edu.lnu.card.exceptions.exception.server.InternalServerError;
 import ua.edu.lnu.card.utils.JwtUtils;
 
 import java.io.IOException;

@@ -7,10 +7,12 @@ import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import ua.edu.lnu.card.controller.CardController;
 import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.card.CardData;
 import ua.edu.lnu.card.entities.Card;
-import ua.edu.lnu.card.service.CardService;
+import ua.edu.lnu.card.services.CardService;
 
 import java.util.Date;
 import java.util.UUID;

@@ -1,16 +1,16 @@
-package ua.edu.lnu.card.service.impl;
+package ua.edu.lnu.card.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dtos.collaborator.CollaboratorCreationUpdateRequest;
 import ua.edu.lnu.card.entities.Collaborator;
 import ua.edu.lnu.card.entities.DeckRole;
-import ua.edu.lnu.card.exception.exception.client.NotFound;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
+import ua.edu.lnu.card.exceptions.exception.client.NotFound;
+import ua.edu.lnu.card.exceptions.exception.server.InternalServerError;
 import ua.edu.lnu.card.mappers.CollaboratorMapper;
-import ua.edu.lnu.card.repository.CollaboratorRepository;
-import ua.edu.lnu.card.service.CollaboratorService;
-import ua.edu.lnu.card.service.DeckRoleService;
+import ua.edu.lnu.card.repositories.CollaboratorRepository;
+import ua.edu.lnu.card.services.CollaboratorService;
+import ua.edu.lnu.card.services.DeckRoleService;
 import ua.edu.lnu.card.utils.DefaultDeckRoles;
 
 import java.util.List;
@@ -31,12 +31,14 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     @Override
     public Collaborator createCollaborator(CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
-        System.out.println("CollaboratorServiceImpl >> createCollaborator >> collaboratorCreationUpdateRequest: " + collaboratorMapper.toEntity(collaboratorCreationUpdateRequest));
+        System.out.println("CollaboratorServiceImpl >> createCollaborator >> collaboratorCreationUpdateRequest: "
+                + collaboratorMapper.toEntity(collaboratorCreationUpdateRequest));
         return collaboratorRepository.save(collaboratorMapper.toEntity(collaboratorCreationUpdateRequest));
     }
 
     @Override
-    public Collaborator updateCollaborator(UUID collaboratorId, CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
+    public Collaborator updateCollaborator(UUID collaboratorId,
+            CollaboratorCreationUpdateRequest collaboratorCreationUpdateRequest) {
         Collaborator collaborator = this.getCollaboratorById(collaboratorId);
         return collaboratorMapper.partialUpdate(collaboratorCreationUpdateRequest, collaborator);
     }

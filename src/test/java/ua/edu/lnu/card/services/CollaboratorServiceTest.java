@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,10 +8,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ua.edu.lnu.card.dtos.collaborator.CollaboratorCreationUpdateRequest;
 import ua.edu.lnu.card.entities.Collaborator;
 import ua.edu.lnu.card.entities.DeckRole;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
+import ua.edu.lnu.card.exceptions.exception.server.InternalServerError;
 import ua.edu.lnu.card.mappers.CollaboratorMapper;
-import ua.edu.lnu.card.repository.CollaboratorRepository;
-import ua.edu.lnu.card.service.impl.CollaboratorServiceImpl;
+import ua.edu.lnu.card.repositories.CollaboratorRepository;
+import ua.edu.lnu.card.services.impl.CollaboratorServiceImpl;
 import ua.edu.lnu.card.utils.DefaultDeckRoles;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service.impl;
+package ua.edu.lnu.card.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dtos.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dtos.deck.DeckResponse;
 import ua.edu.lnu.card.entities.Deck;
-import ua.edu.lnu.card.exception.exception.server.NotImplemented;
+import ua.edu.lnu.card.exceptions.exception.server.NotImplemented;
 import ua.edu.lnu.card.mappers.DeckMapper;
-import ua.edu.lnu.card.repository.DeckRepository;
-import ua.edu.lnu.card.service.CollaboratorService;
-import ua.edu.lnu.card.service.DeckRoleService;
-import ua.edu.lnu.card.service.DeckService;
+import ua.edu.lnu.card.repositories.DeckRepository;
+import ua.edu.lnu.card.services.CollaboratorService;
+import ua.edu.lnu.card.services.DeckRoleService;
+import ua.edu.lnu.card.services.DeckService;
 
 import java.util.UUID;
 
@@ -60,15 +60,12 @@ public class DeckServiceImpl implements DeckService {
         System.out.println("DeckServiceImpl.createDeck: " + deckMapper.toDto(getDeckById(savedDeck.getId())));
 
         deckRoleService.createDefaultDeckRole(
-                savedDeck.getId()
-        );
+                savedDeck.getId());
         collaboratorService.createOwnerCollaborator(
-                savedDeck.getId()
-                , userId);
+                savedDeck.getId(), userId);
 
         return savedDeck;
     }
-
 
     @Override
     public Deck updateDeck(UUID deckId, DeckCreationUpdateRequest deckCreationUpdateRequest) {

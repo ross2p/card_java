@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.service;
+package ua.edu.lnu.card.services;
 
 import ua.edu.lnu.card.dtos.auth.Tokens;
 import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
