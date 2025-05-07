@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.edu.lnu.card.dtos.auth.Token;
 import ua.edu.lnu.card.dtos.auth.Tokens;
-import ua.edu.lnu.card.controller.AuthController;
+// import ua.edu.lnu.card.controllers.AuthController;
 import ua.edu.lnu.card.dtos.auth.LoginAuthentication;
 import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.services.AuthService;

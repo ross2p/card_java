@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import ua.edu.lnu.card.controller.DeckRatingController;
+import ua.edu.lnu.card.controllers.DeckRatingController;
 import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dtos.deck.DeckRatingCreationRequest;
 import ua.edu.lnu.card.dtos.deck.DeckRatingResponse;

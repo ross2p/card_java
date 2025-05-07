@@ -3,7 +3,6 @@ package ua.edu.lnu.card.mappers;
 import org.mapstruct.*;
 import ua.edu.lnu.card.dtos.role.RoleResponse;
 import ua.edu.lnu.card.entities.Role;
-
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface RoleMapper {
 
