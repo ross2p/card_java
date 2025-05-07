@@ -1,8 +1,6 @@
 package ua.edu.lnu.card.exception.status;
 
 import org.springframework.lang.Nullable;
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
 
 public enum Series {
     INFORMATIONAL(1),
@@ -47,4 +45,3 @@ public enum Series {
         return null;
     }
 }
-

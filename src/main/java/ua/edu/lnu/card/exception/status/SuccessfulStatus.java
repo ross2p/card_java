@@ -1,8 +1,5 @@
 package ua.edu.lnu.card.exception.status;
 
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
-
 public enum SuccessfulStatus implements HttpStatus {
 
     OK(200, "OK"),
@@ -34,8 +31,7 @@ public enum SuccessfulStatus implements HttpStatus {
         return this.reasonPhrase;
     }
 
-
-    public static SuccessfulStatus valueOf(int code)  {
+    public static SuccessfulStatus valueOf(int code) {
         SuccessfulStatus status = resolve(code);
         if (status == null) {
             throw new IllegalArgumentException("Unknown HTTP status code: " + code);

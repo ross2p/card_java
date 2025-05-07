@@ -1,8 +1,5 @@
 package ua.edu.lnu.card.exception.status;
 
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
-
 public enum ServerErrorStatus implements HttpStatus {
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
     NOT_IMPLEMENTED(501, "Not Implemented"),
@@ -35,7 +32,6 @@ public enum ServerErrorStatus implements HttpStatus {
         return reasonPhrase;
     }
 
-
     public static ServerErrorStatus valueOf(int code) {
         ServerErrorStatus status = resolve(code);
         if (status == null) {
@@ -43,6 +39,7 @@ public enum ServerErrorStatus implements HttpStatus {
         }
         return status;
     }
+
     public static ServerErrorStatus resolve(int code) {
         for (ServerErrorStatus status : values()) {
             if (status.value() == code) {
