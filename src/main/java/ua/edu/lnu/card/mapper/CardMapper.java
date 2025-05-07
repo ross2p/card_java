@@ -20,8 +20,6 @@ public interface CardMapper {
     @Mapping(source = "deckId", target = "deck.id")
     Card toEntity(CardCreationUpdateRequest cardCreationUpdateRequest);
 
-    @Mapping(source = "deck.id", target = "deckId")
-    CardCreationUpdateRequest toDto1(Card card);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "deckId", target = "deck.id")

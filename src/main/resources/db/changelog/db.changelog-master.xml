@@ -6,15 +6,16 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
 
 
-    <include file="db/changelog/2025/01/09-01-changelog.xml"/>
-    <include file="db/changelog/2025/01/09-02-changelog.xml"/>
-    <include file="db/changelog/2025/01/09-03-changelog.xml"/>
-    <include file="db/changelog/2025/01/19-01-changelog.xml"/>
-    <include file="db/changelog/2025/02/02-01-changelog.xml"/>
+<!--    <include file="db/changelog/2025/01/09-01-changelog.xml"/>-->
+<!--    <include file="db/changelog/2025/01/09-02-changelog.xml"/>-->
+<!--    <include file="db/changelog/2025/01/09-03-changelog.xml"/>-->
+<!--    <include file="db/changelog/2025/01/19-01-changelog.xml"/>-->
+<!--    <include file="db/changelog/2025/02/02-01-changelog.xml"/>-->
 
     <!--    seeds       -->
     <changeSet id="0" author="rostyslavpasternak (generated)">
-        <sqlFile path="db/changelog/seeds/2024/11/01-02-changelog.sql"/>
+<!--        <sqlFile path="db/changelog/seeds/2024/11/01-02-changelog.sql"/>-->
 
     </changeSet>
+    <include file="db/changelog/2025/04/06-01-changelog.sql"/>
 </databaseChangeLog>

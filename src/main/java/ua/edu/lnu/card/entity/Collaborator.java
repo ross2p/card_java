@@ -23,7 +23,7 @@ public class Collaborator {
     private UUID id;
 
     @ManyToOne
-    @JsonBackReference
+//    @JsonBackReference
     @JoinColumn(name = "deck_id", nullable = false)
     private Deck deck;
 

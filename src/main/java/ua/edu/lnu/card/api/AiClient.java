@@ -32,7 +32,8 @@ public class AiClient {
 
     public enum Role {
         SYSTEM("system"),
-        USER("user");
+        USER("user"),
+        ASSISTANT("assistant");
 
         private final String value;
 
@@ -89,7 +90,7 @@ public class AiClient {
                 .build();
 
         String responseBody = CLIENT.send(request, HttpResponse.BodyHandlers.ofString()).body();
-
+        System.out.println("responseBody111: " + responseBody);
         return MAPPER.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
     }
 
@@ -97,15 +98,20 @@ public class AiClient {
         messages.add(0, new Message(Role.SYSTEM,  AIConstants.getAiResponseExample(responseType)));
 
         Map<String, Object> response = this.sendMessage();
-        List<Map<String, Object>> choices = (List<Map<String, Object>>) response.get("choices");
-        Map<String, Object> firstChoice = choices.get(0);
+        Map<String, Object> firstChoice;
+        if(response.get("choices") != null) {
+            List<Map<String, Object>> choices = (List<Map<String, Object>>) response.get("choices");
+            firstChoice = choices.get(0);
+
+        }else {
+            firstChoice = response;
+        }
 
         Map<String, Object> message = (Map<String, Object>) firstChoice.get("message");
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonContent = (String) message.get("content");
         jsonContent = jsonContent.substring(jsonContent.indexOf("{"), jsonContent.lastIndexOf("}") + 1);
-
         return objectMapper.readValue(jsonContent, responseType);
     }
 }

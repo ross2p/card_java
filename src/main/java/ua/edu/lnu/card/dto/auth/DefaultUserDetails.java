@@ -13,7 +13,6 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class DefaultUserDetails implements UserDetails {
     private UUID id;
     private String email;

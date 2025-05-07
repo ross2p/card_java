@@ -1,5 +1,7 @@
 package ua.edu.lnu.card.dto.deck;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * DTO for {@link ua.edu.lnu.card.entity.Deck}
  */
 @Value
+@Builder
 public class DeckCreationUpdateRequest implements Serializable {
     String name;
     String description;

@@ -31,9 +31,9 @@ public class Deck {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-//    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnore
-//    private Set<Card> cards = new HashSet<>();
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Card> cards = new HashSet<>();
 
     @Column(name = "is_private", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean isPrivate = true;
@@ -47,7 +47,8 @@ public class Deck {
 //    private Set<DeckRating> deckRatings = new LinkedHashSet<>();
 
 
-    @OneToMany(mappedBy = "deck", orphanRemoval = true)
+//    @OneToMany(mappedBy = "deck")
+    @OneToMany(mappedBy = "deck", fetch = FetchType.EAGER)
     private Set<Collaborator> collaborators = new LinkedHashSet<>();
 
 

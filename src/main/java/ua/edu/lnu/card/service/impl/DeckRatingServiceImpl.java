@@ -24,6 +24,8 @@ public class DeckRatingServiceImpl implements DeckRatingService {
 
     @Override
     public DeckRatingResponse getDeckRatingById(UUID id) {
-        return null;
+        return deckRatingRepository.findById(id)
+                .map(deckRatingMapper::toDto)
+                .orElse(null);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
 import ua.edu.lnu.card.dto.deck.DeckResponse;
 import ua.edu.lnu.card.entity.Deck;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
+import ua.edu.lnu.card.exception.exception.server.NotImplemented;
 import ua.edu.lnu.card.mapper.DeckMapper;
 import ua.edu.lnu.card.repository.DeckRepository;
 import ua.edu.lnu.card.service.CollaboratorService;
@@ -26,7 +26,6 @@ public class DeckServiceImpl implements DeckService {
 
     private final DeckRoleService deckRoleService;
     private final CollaboratorService collaboratorService;
-
 
     @Override
     public Deck getDeckById(UUID deckId) {
@@ -47,8 +46,8 @@ public class DeckServiceImpl implements DeckService {
         Example<Deck> example = Example.of(exampleDeck, ExampleMatcher.matching()
                 .withIgnoreNullValues()
                 .withMatcher("isPrivate", ExampleMatcher.GenericPropertyMatchers.exact()));
-
-        return deckRepository.findAll(example, pageRequest)
+        Page<Deck> pageDeck = deckRepository.findAll(example, pageRequest);
+        return pageDeck
                 .map(deckMapper::toDto);
     }
 
@@ -80,13 +79,11 @@ public class DeckServiceImpl implements DeckService {
 
     @Override
     public void deleteDeck(UUID deckId) {
-        throw new InternalServerError("Not implemented yet");
+        throw new NotImplemented("Not implemented yet");
     }
 
     @Override
     public DeckResponse getDeckDtoById(UUID deckId) {
-        System.out.println("DeckServiceImpl.getDeckDtoById" + getDeckById(deckId).getCollaborators().size());
         return deckMapper.toDto(getDeckById(deckId));
     }
-
 }

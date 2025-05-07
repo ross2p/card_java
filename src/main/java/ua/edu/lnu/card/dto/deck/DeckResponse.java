@@ -24,5 +24,4 @@ public class DeckResponse implements Serializable {
     Date updatedAt;
     Integer cardsCount;
     Double rating;
-    Set<CollaboratorResponse> collaborators;
 }
