@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.dto.deck;
+package ua.edu.lnu.card.dtos.deck;
 
 import lombok.Builder;
 import lombok.Value;
@@ -6,7 +6,7 @@ import lombok.Value;
 import java.io.Serializable;
 
 /**
- * DTO for {@link ua.edu.lnu.card.entity.Deck}
+ * DTO for {@link ua.edu.lnu.card.entities.Deck}
  */
 @Value
 @Builder

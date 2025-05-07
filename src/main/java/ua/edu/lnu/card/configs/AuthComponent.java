@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.config;
+package ua.edu.lnu.card.configs;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
+import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
 
 import java.util.Objects;
 import java.util.UUID;

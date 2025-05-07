@@ -1,10 +1,10 @@
-package ua.edu.lnu.card.mapper;
+package ua.edu.lnu.card.mappers;
 
 import org.mapstruct.*;
-import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
-import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.dto.deck.DescriptionDeck;
-import ua.edu.lnu.card.entity.Deck;
+import ua.edu.lnu.card.dtos.deck.DeckCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.deck.DeckResponse;
+import ua.edu.lnu.card.dtos.deck.DescriptionDeck;
+import ua.edu.lnu.card.entities.Deck;
 
 import java.util.UUID;
 

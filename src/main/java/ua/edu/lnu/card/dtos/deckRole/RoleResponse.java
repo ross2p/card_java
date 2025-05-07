@@ -1,13 +1,13 @@
-package ua.edu.lnu.card.dto.deckRole;
+package ua.edu.lnu.card.dtos.deckRole;
 
 import lombok.Value;
-import ua.edu.lnu.card.dto.deck.DeckResponse;
+import ua.edu.lnu.card.dtos.deck.DeckResponse;
 
 import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * DTO for {@link ua.edu.lnu.card.entity.DeckRole}
+ * DTO for {@link ua.edu.lnu.card.entities.DeckRole}
  */
 @Value
 public class RoleResponse implements Serializable {

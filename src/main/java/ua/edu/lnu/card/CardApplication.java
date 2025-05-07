@@ -2,7 +2,8 @@ package ua.edu.lnu.card;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ua.edu.lnu.card.exception.exception.HttpError;
+
+import ua.edu.lnu.card.exceptions.exception.HttpError;
 
 @SpringBootApplication
 public class CardApplication {

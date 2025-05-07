@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.controller;
+package ua.edu.lnu.card.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.edu.lnu.card.dto.card.CardCreationUpdateRequest;
-import ua.edu.lnu.card.dto.deck.DescriptionDeck;
+import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.deck.DescriptionDeck;
 import ua.edu.lnu.card.service.AIService;
 
 

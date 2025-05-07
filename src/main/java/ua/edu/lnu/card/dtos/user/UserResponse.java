@@ -1,7 +1,7 @@
-package ua.edu.lnu.card.dto.user;
+package ua.edu.lnu.card.dtos.user;
 
 import lombok.Data;
-import ua.edu.lnu.card.dto.role.RoleResponse;
+import ua.edu.lnu.card.dtos.role.RoleResponse;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * DTO for {@link ua.edu.lnu.card.entity.User}
+ * DTO for {@link ua.edu.lnu.card.entities.User}
  */
 @Data
 public class UserResponse implements Serializable {

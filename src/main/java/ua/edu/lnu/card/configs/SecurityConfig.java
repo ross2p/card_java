@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.config;
+package ua.edu.lnu.card.configs;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ua.edu.lnu.card.filter.JwtAuthEntryPoint;
-import ua.edu.lnu.card.filter.JwtAuthFilter;
+import ua.edu.lnu.card.filters.JwtAuthEntryPoint;
+import ua.edu.lnu.card.filters.JwtAuthFilter;
 
 @Configuration
 @EnableWebSecurity

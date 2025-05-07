@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.entity;
+package ua.edu.lnu.card.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

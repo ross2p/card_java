@@ -1,8 +1,8 @@
-package ua.edu.lnu.card.mapper;
+package ua.edu.lnu.card.mappers;
 
 import org.mapstruct.*;
-import ua.edu.lnu.card.dto.deckRole.DeckRoleCreationUpdateRequest;
-import ua.edu.lnu.card.entity.DeckRole;
+import ua.edu.lnu.card.dtos.deckRole.DeckRoleCreationUpdateRequest;
+import ua.edu.lnu.card.entities.DeckRole;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface DeckRoleMapper {

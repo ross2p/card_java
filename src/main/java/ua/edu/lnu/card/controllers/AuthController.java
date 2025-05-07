@@ -1,12 +1,12 @@
-package ua.edu.lnu.card.controller;
+package ua.edu.lnu.card.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.lnu.card.dto.auth.Token;
-import ua.edu.lnu.card.dto.auth.Tokens;
-import ua.edu.lnu.card.dto.auth.LoginAuthentication;
-import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.auth.Token;
+import ua.edu.lnu.card.dtos.auth.Tokens;
+import ua.edu.lnu.card.dtos.auth.LoginAuthentication;
+import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
 import ua.edu.lnu.card.exception.exception.HttpError;
 import ua.edu.lnu.card.exception.exception.client.BadRequest;
 import ua.edu.lnu.card.service.AuthService;

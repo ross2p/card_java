@@ -1,9 +1,9 @@
-package ua.edu.lnu.card.mapper;
+package ua.edu.lnu.card.mappers;
 
 import org.mapstruct.*;
-import ua.edu.lnu.card.dto.collaborator.CollaboratorCreationUpdateRequest;
-import ua.edu.lnu.card.dto.collaborator.CollaboratorResponse;
-import ua.edu.lnu.card.entity.Collaborator;
+import ua.edu.lnu.card.dtos.collaborator.CollaboratorCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.collaborator.CollaboratorResponse;
+import ua.edu.lnu.card.entities.Collaborator;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {UserMapper.class})
 public interface CollaboratorMapper {

@@ -1,6 +1,6 @@
 package ua.edu.lnu.card.utils;
 
-import ua.edu.lnu.card.dto.deckRole.DeckRoleCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.deckRole.DeckRoleCreationUpdateRequest;
 
 import java.util.List;
 import java.util.UUID;

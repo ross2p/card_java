@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.dto.auth;
+package ua.edu.lnu.card.dtos.auth;
 
 public record Token(String refreshToken) {
 }

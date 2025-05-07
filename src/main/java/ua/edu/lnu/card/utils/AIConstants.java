@@ -1,8 +1,8 @@
 package ua.edu.lnu.card.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ua.edu.lnu.card.dto.card.CardCreationUpdateRequest;
-import ua.edu.lnu.card.dto.deck.DescriptionDeck;
+import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.deck.DescriptionDeck;
 
 
 public class AIConstants {

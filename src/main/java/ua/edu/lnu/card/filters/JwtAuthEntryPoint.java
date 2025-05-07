@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.filter;
+package ua.edu.lnu.card.filters;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

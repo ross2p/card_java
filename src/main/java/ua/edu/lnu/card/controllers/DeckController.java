@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.controller;
+package ua.edu.lnu.card.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,13 +7,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
-import ua.edu.lnu.card.dto.card.CardData;
-import ua.edu.lnu.card.dto.deck.DeckCreationUpdateRequest;
-import ua.edu.lnu.card.dto.deck.DeckResponse;
-import ua.edu.lnu.card.entity.Collaborator;
-import ua.edu.lnu.card.entity.Deck;
-import ua.edu.lnu.card.entity.DeckRole;
+import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
+import ua.edu.lnu.card.dtos.card.CardData;
+import ua.edu.lnu.card.dtos.deck.DeckCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.deck.DeckResponse;
+import ua.edu.lnu.card.entities.Collaborator;
+import ua.edu.lnu.card.entities.Deck;
+import ua.edu.lnu.card.entities.DeckRole;
 import ua.edu.lnu.card.service.CardService;
 import ua.edu.lnu.card.service.CollaboratorService;
 import ua.edu.lnu.card.service.DeckRoleService;

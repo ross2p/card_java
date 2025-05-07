@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.config;
+package ua.edu.lnu.card.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

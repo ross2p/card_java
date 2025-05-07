@@ -1,11 +1,11 @@
-package ua.edu.lnu.card.mapper;
+package ua.edu.lnu.card.mappers;
 
 import org.mapstruct.*;
-import ua.edu.lnu.card.config.AuthComponent;
-import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
-import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
-import ua.edu.lnu.card.dto.user.UserResponse;
-import ua.edu.lnu.card.entity.User;
+import ua.edu.lnu.card.configs.AuthComponent;
+import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
+import ua.edu.lnu.card.dtos.user.UserCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.user.UserResponse;
+import ua.edu.lnu.card.entities.User;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {RoleMapper.class, AuthComponent.class})
 public interface UserMapper {

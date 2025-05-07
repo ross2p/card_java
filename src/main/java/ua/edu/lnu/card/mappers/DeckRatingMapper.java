@@ -1,9 +1,9 @@
-package ua.edu.lnu.card.mapper;
+package ua.edu.lnu.card.mappers;
 
 import org.mapstruct.*;
-import ua.edu.lnu.card.dto.deck.DeckRatingCreationRequest;
-import ua.edu.lnu.card.dto.deck.DeckRatingResponse;
-import ua.edu.lnu.card.entity.DeckRating;
+import ua.edu.lnu.card.dtos.deck.DeckRatingCreationRequest;
+import ua.edu.lnu.card.dtos.deck.DeckRatingResponse;
+import ua.edu.lnu.card.entities.DeckRating;
 
 import java.util.UUID;
 

@@ -1,12 +1,12 @@
-package ua.edu.lnu.card.controller;
+package ua.edu.lnu.card.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
-import ua.edu.lnu.card.dto.deck.DeckRatingCreationRequest;
-import ua.edu.lnu.card.dto.deck.DeckRatingResponse;
+import ua.edu.lnu.card.dtos.auth.DefaultUserDetails;
+import ua.edu.lnu.card.dtos.deck.DeckRatingCreationRequest;
+import ua.edu.lnu.card.dtos.deck.DeckRatingResponse;
 import ua.edu.lnu.card.service.DeckRatingService;
 
 import java.util.UUID;

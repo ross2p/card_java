@@ -1,14 +1,14 @@
-package ua.edu.lnu.card.dto.collaborator;
+package ua.edu.lnu.card.dtos.collaborator;
 
 import lombok.Value;
-import ua.edu.lnu.card.dto.user.UserResponse;
+import ua.edu.lnu.card.dtos.user.UserResponse;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 /**
- * DTO for {@link ua.edu.lnu.card.entity.Collaborator}
+ * DTO for {@link ua.edu.lnu.card.entities.Collaborator}
  */
 @Value
 public class CollaboratorResponse implements Serializable {

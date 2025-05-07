@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.filter;
+package ua.edu.lnu.card.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;

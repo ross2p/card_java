@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.dto.card;
+package ua.edu.lnu.card.dtos.card;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * DTO for {@link ua.edu.lnu.card.entity.Card}
+ * DTO for {@link ua.edu.lnu.card.entities.Card}
  */
 @Value
 @AllArgsConstructor

@@ -1,9 +1,9 @@
-package ua.edu.lnu.card.dto.auth;
+package ua.edu.lnu.card.dtos.auth;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ua.edu.lnu.card.dto.role.RoleResponse;
+import ua.edu.lnu.card.dtos.role.RoleResponse;
 
 import java.util.Collection;
 import java.util.HashSet;

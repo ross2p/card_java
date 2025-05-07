@@ -1,11 +1,11 @@
-package ua.edu.lnu.card.controller;
+package ua.edu.lnu.card.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.lnu.card.dto.card.CardCreationUpdateRequest;
-import ua.edu.lnu.card.dto.card.CardData;
-import ua.edu.lnu.card.entity.Card;
+import ua.edu.lnu.card.dtos.card.CardCreationUpdateRequest;
+import ua.edu.lnu.card.dtos.card.CardData;
+import ua.edu.lnu.card.entities.Card;
 import ua.edu.lnu.card.service.CardService;
 
 import java.util.UUID;

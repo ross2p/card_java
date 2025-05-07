@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.dto.collaborator;
+package ua.edu.lnu.card.dtos.collaborator;
 
 import lombok.Value;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * DTO for {@link ua.edu.lnu.card.entity.Collaborator}
+ * DTO for {@link ua.edu.lnu.card.entities.Collaborator}
  */
 @Value
 public class CollaboratorCreationUpdateRequest implements Serializable {

@@ -1,4 +1,4 @@
-package ua.edu.lnu.card.dto.user;
+package ua.edu.lnu.card.dtos.user;
 
 import lombok.Builder;
 import lombok.Value;
@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * DTO for {@link ua.edu.lnu.card.entity.User}
+ * DTO for {@link ua.edu.lnu.card.entities.User}
  */
 @Value
 @Builder
