@@ -7,9 +7,9 @@ import ua.edu.lnu.card.entity.Card;
 import java.util.List;
 import java.util.UUID;
 
+public interface CardService {
+    CardData getCardDataById(UUID cardId);
 
-public interface  CardService {
-    CardData getCardById(UUID cardId);
     List<CardData> getAllByDeckId(UUID deckId);
 
     Card create(CardCreationUpdateRequest cardDto);

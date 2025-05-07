@@ -2,8 +2,6 @@ package ua.edu.lnu.card.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -25,7 +23,6 @@ public class DeckRole {
     @ManyToOne()
     @JoinColumn(name = "deck_id")
     private Deck deck;
-
 
     @Column(name = "is_viewed", nullable = false, columnDefinition = "boolean default false")
     private boolean isViewed;

@@ -1,8 +1,5 @@
 package ua.edu.lnu.card.exception.status;
 
-import ua.edu.lnu.card.exception.exception.*;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
-
 public interface HttpStatus {
     int value();
 

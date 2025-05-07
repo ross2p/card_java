@@ -11,11 +11,14 @@ import ua.edu.lnu.card.dto.role.RoleResponse;
 import ua.edu.lnu.card.exception.exception.client.BadRequest;
 import ua.edu.lnu.card.exception.exception.client.Forbidden;
 import ua.edu.lnu.card.exception.exception.client.Unauthorized;
+import io.jsonwebtoken.security.SignatureException;
 
 import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.SecretKey;
 
 @Slf4j
 @Component
@@ -28,7 +31,6 @@ public class BaseJwtUtils implements JwtUtils {
 
     @Value("${jwt.access-token-lifetime}")
     private Duration accessTime;
-
 
     private String generateToken(DefaultUserDetails user, Duration lifetime) {
         Date issuedAt = new Date();
@@ -55,9 +57,10 @@ public class BaseJwtUtils implements JwtUtils {
         return generateToken(user, accessTime);
     }
 
-    public boolean validateToken(String token)  {
+    public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token);
+            SecretKey key = new SecretKeySpec(secret.getBytes(), "HmacSHA512");
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (MalformedJwtException e) {
             throw new BadRequest("Invalid JWT token: " + e.getMessage());
@@ -71,7 +74,6 @@ public class BaseJwtUtils implements JwtUtils {
             throw new Forbidden("JWT token signature validation failed: " + e.getMessage());
         }
     }
-
 
     public Tokens generateTokens(DefaultUserDetails userDetails) {
         String accessToken = generateAccessToken(userDetails);
@@ -104,6 +106,7 @@ public class BaseJwtUtils implements JwtUtils {
 
         return defaultUserDetails;
     }
+
     private Claims parseClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(secret).build()
                 .parseClaimsJws(token)

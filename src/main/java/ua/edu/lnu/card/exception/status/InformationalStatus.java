@@ -1,8 +1,5 @@
 package ua.edu.lnu.card.exception.status;
 
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
-
 public enum InformationalStatus implements HttpStatus {
     CONTINUE(100, "Continue"),
     SWITCHING_PROTOCOLS(101, "Switching Protocols"),
@@ -10,13 +7,14 @@ public enum InformationalStatus implements HttpStatus {
     EARLY_HINTS(103, "EarlyHints"),
     CHECKPOINT(103, "Checkpoint");
 
-
     InformationalStatus(int value, String reasonPhrase) {
         this.value = value;
         this.reasonPhrase = reasonPhrase;
     }
+
     final int value;
     final String reasonPhrase;
+
     @Override
     public int value() {
         return this.value;
@@ -27,7 +25,6 @@ public enum InformationalStatus implements HttpStatus {
         return this.reasonPhrase;
     }
 
-
     public static InformationalStatus resolve(int code) {
         for (InformationalStatus status : values()) {
             if (status.value() == code) {
@@ -37,7 +34,7 @@ public enum InformationalStatus implements HttpStatus {
         return null;
     }
 
-    public static InformationalStatus valueOf(int code)  {
+    public static InformationalStatus valueOf(int code) {
         InformationalStatus status = resolve(code);
         if (status == null) {
             throw new IllegalArgumentException("Unknown HTTP status code: " + code);

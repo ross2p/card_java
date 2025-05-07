@@ -1,7 +1,7 @@
 package ua.edu.lnu.card.dto.deck;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -12,6 +12,7 @@ import java.util.UUID;
  */
 @Value
 @Data
+@Builder
 public class DescriptionDeck implements Serializable {
     UUID id;
     String description;

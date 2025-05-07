@@ -52,7 +52,7 @@ class DeckServiceImplTest {
         deck.setId(deckId);
 
         deckCreationUpdateRequest = DeckCreationUpdateRequest.builder().build();
-        deckResponse = new DeckResponse();
+        deckResponse = DeckResponse.builder().id(deckId).build();
 
         when(deckRepository.findById(deckId)).thenReturn(Optional.of(deck));
     }

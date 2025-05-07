@@ -1,6 +1,5 @@
 package ua.edu.lnu.card.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +9,6 @@ import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
 import java.util.UUID;
-
 
 @Data
 @Entity
@@ -23,7 +21,7 @@ public class Collaborator {
     private UUID id;
 
     @ManyToOne
-//    @JsonBackReference
+    // @JsonBackReference
     @JoinColumn(name = "deck_id", nullable = false)
     private Deck deck;
 

@@ -1,6 +1,5 @@
 package ua.edu.lnu.card.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.edu.lnu.card.dto.deckRole.DeckRoleCreationUpdateRequest;
@@ -46,7 +45,6 @@ public class DeckRoleServiceImpl implements DeckRoleService {
     public DeckRole updateDeckRole(UUID deckRoleId, DeckRoleCreationUpdateRequest deckRoleCreationUpdateRequest) {
         DeckRole deckRole = this.getDeckRoleById(deckRoleId);
 
-
         return deckRoleMapper.partialUpdate(deckRoleCreationUpdateRequest, deckRole);
     }
 
@@ -64,6 +62,7 @@ public class DeckRoleServiceImpl implements DeckRoleService {
     @Override
     public DeckRole getDeckRoleByDeckIdAndName(UUID deckId, String name) {
         return deckRoleRepository.findByDeckIdAndName(deckId, name)
-                .orElseThrow(() -> new RuntimeException("Deck role with deck id %s and name %s not found".formatted(deckId, name)));
+                .orElseThrow(() -> new RuntimeException(
+                        "Deck role with deck id %s and name %s not found".formatted(deckId, name)));
     }
 }

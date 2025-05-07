@@ -1,5 +1,6 @@
 package ua.edu.lnu.card.dto.deck;
 
+import lombok.Builder;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.UUID;
  * DTO for {@link ua.edu.lnu.card.entity.DeckRating}
  */
 @Value
+@Builder
 public class DeckRatingResponse implements Serializable {
     UUID id;
     UUID deckId;

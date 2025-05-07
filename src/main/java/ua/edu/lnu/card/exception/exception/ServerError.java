@@ -1,6 +1,5 @@
 package ua.edu.lnu.card.exception.exception;
 
-import lombok.ToString;
 import ua.edu.lnu.card.exception.status.ServerErrorStatus;
 
 public class ServerError extends HttpError {

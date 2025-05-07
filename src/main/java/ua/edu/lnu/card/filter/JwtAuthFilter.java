@@ -12,15 +12,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ua.edu.lnu.card.exception.GlobalExceptionHandler;
 import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.ServerError;
 import ua.edu.lnu.card.exception.exception.client.BadRequest;
 import ua.edu.lnu.card.exception.exception.server.InternalServerError;
 import ua.edu.lnu.card.utils.JwtUtils;
@@ -34,16 +30,15 @@ import java.util.Map;
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
-    private final GlobalExceptionHandler globalExceptionHandler;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
             if (!hasAuthorizationBearer(request)) {
                 filterChain.doFilter(request, response);
                 return;
             }
-
 
             String token = getAccessToken(request);
             if (!jwtUtils.validateToken(token)) {
@@ -61,7 +56,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
     }
 
-
     private void handleException(HttpServletResponse response, HttpError e) throws IOException {
         response.setContentType("application/json");
         response.setStatus(e.getStatus());
@@ -69,8 +63,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         Map<String, Object> responseBody = Map.of(
                 "status", e.getStatus(),
                 "message", e.getMessage(),
-                "name", e.getName()
-        );
+                "name", e.getName());
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonResponse = mapper.writeValueAsString(responseBody);
@@ -98,7 +91,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         UserDetails userDetails = getUserDetails(token);
         System.out.println("userDetails: " + userDetails);
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userDetails, null,
+                userDetails.getAuthorities());
         authRequest.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authRequest);
     }

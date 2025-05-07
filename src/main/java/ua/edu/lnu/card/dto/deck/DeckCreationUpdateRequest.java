@@ -1,7 +1,6 @@
 package ua.edu.lnu.card.dto.deck;
 
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;

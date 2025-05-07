@@ -1,7 +1,5 @@
 package ua.edu.lnu.card.dto.role;
 
-import lombok.Value;
-
 import java.io.Serializable;
 import java.util.UUID;
 

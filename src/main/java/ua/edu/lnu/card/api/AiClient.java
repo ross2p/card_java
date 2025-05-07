@@ -72,13 +72,11 @@ public class AiClient {
         return messages.add(new Message(role, MAPPER.writeValueAsString(content)));
     }
 
-
     public Map<String, Object> sendMessage() throws Exception {
         Map<String, Object> requestBody = Map.of(
                 "model", modal,
                 "stream", false,
-                "messages", messages
-        );
+                "messages", messages);
 
         System.out.println("requestBody: " + MAPPER.writeValueAsString(requestBody));
 
@@ -91,19 +89,21 @@ public class AiClient {
 
         String responseBody = CLIENT.send(request, HttpResponse.BodyHandlers.ofString()).body();
         System.out.println("responseBody111: " + responseBody);
-        return MAPPER.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
+        return MAPPER.readValue(responseBody, new TypeReference<Map<String, Object>>() {
+        });
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T sendMessage(Class<T> responseType) throws Exception {
-        messages.add(0, new Message(Role.SYSTEM,  AIConstants.getAiResponseExample(responseType)));
+        messages.add(0, new Message(Role.SYSTEM, AIConstants.getAiResponseExample(responseType)));
 
         Map<String, Object> response = this.sendMessage();
         Map<String, Object> firstChoice;
-        if(response.get("choices") != null) {
+        if (response.get("choices") != null) {
             List<Map<String, Object>> choices = (List<Map<String, Object>>) response.get("choices");
             firstChoice = choices.get(0);
 
-        }else {
+        } else {
             firstChoice = response;
         }
 

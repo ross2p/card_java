@@ -1,8 +1,6 @@
 package ua.edu.lnu.card.dto.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import javax.validation.constraints.Email;
@@ -27,13 +25,8 @@ public class UserCreationUpdateRequest implements Serializable {
     @Email
     String email;
 
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{8,}$",
-            message = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
-    )
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{8,}$", message = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.")
     String password;
 
     LocalDate birthdate;
 }
-
-

@@ -17,15 +17,15 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping("/{cardId}")
-    public ResponseEntity<CardData> getAllCardByDeckId(@PathVariable UUID cardId){
-        CardData card = cardService.getCardById(cardId);
+    public ResponseEntity<CardData> getAllCardByDeckId(@PathVariable UUID cardId) {
+        CardData card = cardService.getCardDataById(cardId);
         return ResponseEntity.ok(card);
     }
+
     @PostMapping
     public ResponseEntity<Card> create(@RequestBody CardCreationUpdateRequest cardCreationUpdateRequest) {
         Card newDeck = cardService.create(cardCreationUpdateRequest);
         return ResponseEntity.ok(newDeck);
     }
-
 
 }

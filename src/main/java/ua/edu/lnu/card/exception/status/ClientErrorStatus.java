@@ -1,11 +1,5 @@
 package ua.edu.lnu.card.exception.status;
 
-
-import org.springframework.util.Assert;
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.HttpResponse;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
-
 public enum ClientErrorStatus implements HttpStatus {
     BAD_REQUEST(400, "Bad Request"),
     UNAUTHORIZED(401, "Unauthorized"),
@@ -64,8 +58,7 @@ public enum ClientErrorStatus implements HttpStatus {
         return Series.CLIENT_ERROR;
     }
 
-
-    public static HttpStatus valueOf(int statusCode)  {
+    public static HttpStatus valueOf(int statusCode) {
         HttpStatus status = resolve(statusCode);
         if (status == null) {
             throw new IllegalArgumentException("No matching constant for [" + statusCode + "]");
@@ -81,6 +74,5 @@ public enum ClientErrorStatus implements HttpStatus {
         }
         return null;
     }
-
 
 }

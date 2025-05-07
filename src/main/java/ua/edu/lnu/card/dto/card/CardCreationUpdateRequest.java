@@ -1,5 +1,7 @@
 package ua.edu.lnu.card.dto.card;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
@@ -11,6 +13,8 @@ import java.util.UUID;
  */
 @Value
 @NoArgsConstructor(force = true)
+@AllArgsConstructor
+@Builder
 public class CardCreationUpdateRequest implements Serializable {
     UUID deckId;
     String key;

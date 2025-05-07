@@ -67,6 +67,7 @@ public class DeckController {
     public ResponseEntity<Page<DeckResponse>> getAllPublic(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                           @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                                                           @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
+        System.out.println("asdfghjklwertyui2345678--------------------------------------------");
 
         Page<DeckResponse> comments = deckService.getAllPublicDeck(PageRequest.of(offset, pageSize, Sort.by(sortBy)));
         return ResponseEntity.ok(comments);

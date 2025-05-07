@@ -6,7 +6,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.lnu.card.dto.auth.DefaultUserDetails;
 import ua.edu.lnu.card.dto.user.UserCreationUpdateRequest;
-import ua.edu.lnu.card.dto.user.UserResponse;
 import ua.edu.lnu.card.entity.User;
 import ua.edu.lnu.card.service.UserService;
 
@@ -27,7 +26,7 @@ public class UserController {
 
     @PatchMapping
     public ResponseEntity<User> updateMyDetails(@AuthenticationPrincipal DefaultUserDetails userDetails,
-                                                        @RequestBody UserCreationUpdateRequest userCreationUpdateRequest) {
+            @RequestBody UserCreationUpdateRequest userCreationUpdateRequest) {
         UUID userId = userDetails.getId();
         System.out.println("updateMyDetails " + userCreationUpdateRequest.toString());
         User updatedUser = userService.updateUser(userId, userCreationUpdateRequest);

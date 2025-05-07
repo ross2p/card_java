@@ -2,7 +2,6 @@ package ua.edu.lnu.card.dto.collaborator;
 
 import lombok.Value;
 import ua.edu.lnu.card.dto.user.UserResponse;
-import ua.edu.lnu.card.entity.DeckRole;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,9 +1,5 @@
 package ua.edu.lnu.card.exception.status;
 
-
-import ua.edu.lnu.card.exception.exception.HttpError;
-import ua.edu.lnu.card.exception.exception.server.InternalServerError;
-
 public enum RedirectionStatus implements HttpStatus {
     MULTIPLE_CHOICES(300, "Multiple Choices"),
     MOVED_PERMANENTLY(301, "Moved Permanently"),
@@ -40,6 +36,7 @@ public enum RedirectionStatus implements HttpStatus {
         }
         return status;
     }
+
     public static RedirectionStatus resolve(int code) {
         for (RedirectionStatus status : values()) {
             if (status.value() == code) {

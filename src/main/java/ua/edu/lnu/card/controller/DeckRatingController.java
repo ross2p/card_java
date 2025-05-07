@@ -1,6 +1,5 @@
 package ua.edu.lnu.card.controller;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +19,7 @@ public class DeckRatingController {
 
     @PostMapping
     public ResponseEntity<DeckRatingResponse> create(@RequestBody DeckRatingCreationRequest deckRatingCreationRequest,
-                                                     @AuthenticationPrincipal DefaultUserDetails userDetails) {
+            @AuthenticationPrincipal DefaultUserDetails userDetails) {
         UUID userId = userDetails.getId();
         DeckRatingResponse newDeckRating = deckRatingService.save(deckRatingCreationRequest, userId);
         return ResponseEntity.ok(newDeckRating);
